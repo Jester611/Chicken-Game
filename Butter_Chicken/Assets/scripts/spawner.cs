@@ -33,9 +33,7 @@ public class spawner : MonoBehaviour
 
     void Update()
     {
-
-
-        if (enemyn < maxenemy && endround = true )
+        if (enemyn < maxenemy && endround == true )
         {
             //wave enemy
             Vector3 RandomPlanePosition = new Vector3(Random.Range(Xrangemin, Xrangemax), 5, Random.Range(Zrangemin, Zrangemax));
@@ -61,12 +59,12 @@ public class spawner : MonoBehaviour
 
         }
 
-        int enemyspawn = GameObject.Find("butter");
+        // int enemyspawn = GameObject.Find("butter");
  
 
-        if (enemyspawn = enemykill)
-        {
-            endround = true;
-        }
+        // if (enemyspawn = enemykill)
+        // {
+        //     endround = true;
+        // }
     }
 }

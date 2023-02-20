@@ -5,7 +5,6 @@ public class LevelUpScript : MonoBehaviour
 {
     public static event Action OnUpdateStats;
 
-
     //this will link to level up menu and update stats in singleton
 
     private void OnEnable() {
