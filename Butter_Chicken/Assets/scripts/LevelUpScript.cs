@@ -10,12 +10,12 @@ public class LevelUpScript : MonoBehaviour
     private void OnEnable() {
         GlobalStats.OnPlayerLevel += LevelUp;
     }
+
     private void OnDisable() {
         GlobalStats.OnPlayerLevel -= LevelUp;
-        
     }
 
-    private void LevelUp(){
+    private void LevelUp() {
         Time.timeScale = 0f;
     }
 }

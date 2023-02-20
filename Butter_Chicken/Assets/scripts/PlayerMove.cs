@@ -3,8 +3,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float speed;
-    private void Update()
-    {
+    private void Update() {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertial = Input.GetAxis("Vertical");
 

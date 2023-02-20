@@ -14,15 +14,12 @@ public class PlayerController : MonoBehaviour
 
     // INPUTS
 
-    void Awake(){
-
-    }
-    private void Update(){
-
+    private void Update() {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
+
         //handle diagonal movement in isometric envoroniment
-        moveDirection = new Vector2(moveY+moveX, moveY-moveX).normalized;
+        moveDirection = new Vector2(moveY + moveX, moveY - moveX).normalized;
 
         RaycastHit hit;
         Ray aimRay = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -30,8 +27,7 @@ public class PlayerController : MonoBehaviour
 
         transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
 
-
-        if(Input.GetMouseButton(0)){
+        if (Input.GetMouseButton(0)) {
             weapon.SendMessage("Fire");
         }
     }

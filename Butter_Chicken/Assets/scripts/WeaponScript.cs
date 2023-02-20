@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
 {   
-
-
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform gunPoint;
@@ -22,11 +20,12 @@ public class WeaponScript : MonoBehaviour
     private void OnEnable() {
         LevelUpScript.OnUpdateStats += UpdateStats;
     }
+
     private void OnDisable() {
         LevelUpScript.OnUpdateStats -= UpdateStats;
-        
     }
-    public void Fire(){
+
+    public void Fire() {
         if(readyToFire){
             GameObject bullet = Instantiate(bulletPrefab, gunPoint.position, gunPoint.rotation);
             //Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
@@ -36,11 +35,12 @@ public class WeaponScript : MonoBehaviour
             Invoke("Reload", reloadTime);
         }
     }
-    private void Reload(){
+
+    private void Reload() {
         readyToFire = true;
     }
 
-    private void UpdateStats(){
+    private void UpdateStats() {
         bulletSpeed = GlobalStats._instance.gunBulletSpeed;
         reloadTime = GlobalStats._instance.gunRateOfFire;
     }

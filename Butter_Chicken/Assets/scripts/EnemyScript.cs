@@ -3,12 +3,10 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-
-
     [SerializeField] Transform player;
+    [SerializeField] Rigidbody rb;
     float maxHP;
     float movementSpeed;
-    [SerializeField] Rigidbody rb;
     private float currentHP;
     private float distance;
     Vector3 direction;
@@ -21,7 +19,7 @@ public class EnemyScript : MonoBehaviour
         currentHP = maxHP;
     }
 
-    public void TakeDamage(float damageTaken){
+    public void TakeDamage(float damageTaken) {
         currentHP -= damageTaken;
     }
     private void OnEnable() {
@@ -29,33 +27,31 @@ public class EnemyScript : MonoBehaviour
     }
     private void OnDisable() {
         LevelUpScript.OnUpdateStats -= UpdateStats;
-        
     }
 
-    void Update()
-    {
-    if (currentHP <= 0){
+    void Update() {
+        if (currentHP <= 0) {
             Die();
         }
     }
 
-    private void FixedUpdate(){
-
+    private void FixedUpdate() {
         distance = Vector3.Distance(transform.position, player.position);
         direction = player.position - transform.position;
         direction.Normalize();
-        
-        rb.AddForce(direction*movementSpeed, ForceMode.VelocityChange);
+
+        rb.AddForce(direction * movementSpeed, ForceMode.VelocityChange);
 
         float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
     }
-    private void Die(){
+
+    private void Die() {
         Destroy(gameObject);
         OnEnemyKilled?.Invoke();
     }
 
-    private void UpdateStats(){
+    private void UpdateStats() {
         movementSpeed = GlobalStats._instance.enemySpeed;
         maxHP = GlobalStats._instance.enemyHP;
     }
