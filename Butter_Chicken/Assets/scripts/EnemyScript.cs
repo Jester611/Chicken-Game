@@ -18,8 +18,8 @@ public class EnemyScript : MonoBehaviour
     
     private void Awake() {
         rb = gameObject.GetComponent<Rigidbody>();
-        movementSpeed = GlobalStats._instance.enemySpeed;
-        maxHP = GlobalStats._instance.enemyHP;
+        movementSpeed = GlobalStats.instance.enemySpeed;
+        maxHP = GlobalStats.instance.enemyHP;
         currentHP = maxHP;
     }
 
@@ -67,7 +67,7 @@ public class EnemyScript : MonoBehaviour
     }
 
     private void UpdateStats(){
-        movementSpeed = GlobalStats._instance.enemySpeed;
-        maxHP = GlobalStats._instance.enemyHP;
+        movementSpeed = GlobalStats.instance.enemySpeed;
+        maxHP = GlobalStats.instance.enemyHP;
     }
 }
