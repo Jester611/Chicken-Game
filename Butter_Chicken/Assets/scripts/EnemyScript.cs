@@ -3,23 +3,21 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-
     public int enemykill;
 
     [SerializeField] Transform player;
-    float maxHP;
-    float movementSpeed;
-    [SerializeField] Rigidbody rb;
+    Rigidbody rb;
+    [SerializeField] float maxHP;
+    [SerializeField] float movementSpeed;
+
     private float currentHP;
     private float distance;
     Vector3 direction;
 
     public static event Action OnEnemyKilled;
     
-   
-
-    
     private void Awake() {
+        rb = gameObject.GetComponent<Rigidbody>();
         movementSpeed = GlobalStats._instance.enemySpeed;
         maxHP = GlobalStats._instance.enemyHP;
         currentHP = maxHP;
