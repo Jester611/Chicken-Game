@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6658910339751197979}
-  m_Mesh: {fileID: 6690141603448424749, guid: ec21efbdf9c1ccf4ab85f09de313350a, type: 3}
+  m_Mesh: {fileID: 6690141603448424749, guid: 328a4eea1c7ae62458bd9c4ab65c0ec7, type: 3}
 --- !u!23 &2489456680741416023
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -61,8 +61,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: ec21efbdf9c1ccf4ab85f09de313350a, type: 3}
-  - {fileID: -5712725553016846145, guid: ec21efbdf9c1ccf4ab85f09de313350a, type: 3}
+  - {fileID: -876546973899608171, guid: 369c3d14a9a6c344e972b70c09eaed46, type: 3}
+  - {fileID: -5712725553016846145, guid: 328a4eea1c7ae62458bd9c4ab65c0ec7, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
