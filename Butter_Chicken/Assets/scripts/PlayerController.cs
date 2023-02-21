@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     Rigidbody rb;
     Camera cam;
     WeaponScript weapon;
@@ -12,6 +13,14 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 moveDirection;
     private Vector2 mousePosition;
+
+    private void Awake() {
+        if(instance == null){
+            instance = this;
+        }else{
+            Destroy(gameObject);
+        }
+    }
 
     private void Start() {
         cam = Camera.main;

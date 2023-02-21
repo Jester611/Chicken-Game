@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
 {   
-    [SerializeField] private GameObject player;
+    PlayerController player;
+    
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform gunPoint;
+    
     private float bulletSpeed;
     private float reloadTime;
     bool readyToFire;
@@ -14,6 +16,10 @@ public class WeaponScript : MonoBehaviour
     private void Awake() {
         UpdateStats();
         Reload();
+    }
+
+    private void Start() {
+        player = PlayerController.instance;
     }
 
     private void OnEnable() {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    [SerializeField] Transform player;
+    PlayerController player;
     Rigidbody rb;
     [SerializeField] float maxHP;
     [SerializeField] float movementSpeed;
@@ -19,6 +19,7 @@ public class EnemyScript : MonoBehaviour
     }
 
     private void Start() {
+        player = PlayerController.instance;
         movementSpeed = GlobalStats.instance.enemySpeed;
         maxHP = GlobalStats.instance.enemyHP;
         currentHP = maxHP;
@@ -41,8 +42,8 @@ public class EnemyScript : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        distance = Vector3.Distance(transform.position, player.position);
-        direction = player.position - transform.position;
+        distance = Vector3.Distance(transform.position, player.transform.position);
+        direction = player.transform.position - transform.position;
         direction.Normalize();
 
         rb.AddForce(direction * movementSpeed, ForceMode.VelocityChange);
