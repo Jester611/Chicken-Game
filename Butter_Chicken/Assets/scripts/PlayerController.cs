@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         hit.point.x, transform.position.y, hit.point.z));
 
         if (Input.GetMouseButton(0)) {
-            gameObject.SendMessage("Fire");
+            // gameObject.SendMessage("Fire");
         }
     }
 

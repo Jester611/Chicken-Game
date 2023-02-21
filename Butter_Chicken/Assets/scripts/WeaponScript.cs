@@ -7,13 +7,12 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform gunPoint;
-    [SerializeField] private float bulletSpeed;
-    [SerializeField] private float reloadTime;
+    private float bulletSpeed;
+    private float reloadTime;
     bool readyToFire;
 
     private void Awake() {
-        //bulletSpeed = GlobalStats.instance.gunBulletSpeed;
-        //reloadTime = GlobalStats.instance.gunRateOfFire;
+        UpdateStats();
         Reload();
     }
 
@@ -32,7 +31,6 @@ public class WeaponScript : MonoBehaviour
             bullet.GetComponent<Rigidbody>().AddForce(gunPoint.forward * bulletSpeed, ForceMode.Impulse);
             readyToFire = false;
             Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
-            Debug.Log("Gun fire");
             Invoke("Reload", reloadTime);
         }
     }
