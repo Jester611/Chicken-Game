@@ -7,6 +7,8 @@ public class GlobalStats : MonoBehaviour
 
     public static event Action OnPlayerLevel;
 
+    //this is a terrible solution and is probably better reworked
+
     // ## VARIABLES RELATED TO UPGRADES ##
     public float bulletDamage;
     public float bulletSize;

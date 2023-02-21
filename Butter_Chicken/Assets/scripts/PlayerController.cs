@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     Camera cam;
 
-    [SerializeField] private GameObject weapon;
     [SerializeField] private LayerMask aimMask;
     [SerializeField] private float movementSpeed;
 
@@ -29,14 +28,16 @@ public class PlayerController : MonoBehaviour
         Ray aimRay = cam.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(aimRay, out hit, Mathf.Infinity, aimMask);
 
-        transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
+        transform.LookAt(new Vector3(
+        hit.point.x, transform.position.y, hit.point.z));
 
         if (Input.GetMouseButton(0)) {
-            weapon.SendMessage("Fire");
+            gameObject.SendMessage("Fire");
         }
     }
 
     private void FixedUpdate() {
         rb.AddForce(new Vector3(moveDirection.x * movementSpeed, 0f, moveDirection.y * movementSpeed), ForceMode.VelocityChange);
     }
+
 }

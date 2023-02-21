@@ -31,7 +31,8 @@ public class WeaponScript : MonoBehaviour
             //Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
             bullet.GetComponent<Rigidbody>().AddForce(gunPoint.forward * bulletSpeed, ForceMode.Impulse);
             readyToFire = false;
-            
+            Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
+            Debug.Log("Gun fire");
             Invoke("Reload", reloadTime);
         }
     }
