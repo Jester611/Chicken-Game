@@ -14,8 +14,8 @@ public class EnemyScript : MonoBehaviour
     public static event Action OnEnemyKilled;
 
     private void Awake() {
-        movementSpeed = GlobalStats._instance.enemySpeed;
-        maxHP = GlobalStats._instance.enemyHP;
+        movementSpeed = GlobalStats.instance.enemySpeed;
+        maxHP = GlobalStats.instance.enemyHP;
         currentHP = maxHP;
     }
 
@@ -52,7 +52,7 @@ public class EnemyScript : MonoBehaviour
     }
 
     private void UpdateStats() {
-        movementSpeed = GlobalStats._instance.enemySpeed;
-        maxHP = GlobalStats._instance.enemyHP;
+        movementSpeed = GlobalStats.instance.enemySpeed;
+        maxHP = GlobalStats.instance.enemyHP;
     }
 }

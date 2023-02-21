@@ -11,11 +11,11 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private float knockback;
     [SerializeField] private float damage;
 
-    private void Awake() {
-        size = GlobalStats._instance.bulletSize;
-        explosionRadius = GlobalStats._instance.bulletExplosiveRadius;
-        knockback = GlobalStats._instance.bulletKnockback;
-        damage = GlobalStats._instance.bulletDamage;
+    private void Start() {
+        size = GlobalStats.instance.bulletSize;
+        explosionRadius = GlobalStats.instance.bulletExplosiveRadius;
+        knockback = GlobalStats.instance.bulletKnockback;
+        damage = GlobalStats.instance.bulletDamage;
         transform.localScale = new Vector3(size, size, size);
         Destroy(gameObject, 10f);
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GlobalStats : MonoBehaviour
 {
-    public static GlobalStats _instance { get; private set; }
+    public static GlobalStats instance { get; private set; }
 
     public static event Action OnPlayerLevel;
 
@@ -22,23 +22,19 @@ public class GlobalStats : MonoBehaviour
     // Player stats
     private int playerXP;
     public int playerLevelRequirement;
-    private void Start() {
-        if (_instance != null && _instance != this) {
-            Destroy(this);
-        } else {
-            _instance = this;
-        }
-    }
+
     private void Awake() {
-        if (_instance != null && _instance != this) {
-            Destroy(this);
+        if (instance == null) {
+            instance = this;
         } else {
-            _instance = this;
+            Destroy(this);
         }
     }
+
     private void OnEnable() {
         EnemyScript.OnEnemyKilled += GainXP;
     }
+
     private void OnDisable() {
         EnemyScript.OnEnemyKilled -= GainXP;
     }

@@ -1,18 +1,22 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    // ## VARIABLES ##
+    Rigidbody rb;
+    Camera cam;
+
     [SerializeField] private GameObject weapon;
-    [SerializeField] private Camera mainCamera;
-    [SerializeField] private Rigidbody rb;
     [SerializeField] private LayerMask aimMask;
     [SerializeField] private float movementSpeed;
 
     private Vector2 moveDirection;
     private Vector2 mousePosition;
 
-    // INPUTS
+    private void Start() {
+        rb = GetComponent<Rigidbody>();
+        cam = Camera.main;
+    }
 
     private void Update() {
         float moveX = Input.GetAxisRaw("Horizontal");
@@ -22,7 +26,7 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector2(moveY + moveX, moveY - moveX).normalized;
 
         RaycastHit hit;
-        Ray aimRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray aimRay = cam.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(aimRay, out hit, Mathf.Infinity, aimMask);
 
         transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));

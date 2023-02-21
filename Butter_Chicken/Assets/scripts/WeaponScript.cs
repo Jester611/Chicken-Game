@@ -12,8 +12,8 @@ public class WeaponScript : MonoBehaviour
     bool readyToFire;
 
     private void Awake() {
-        //bulletSpeed = GlobalStats._instance.gunBulletSpeed;
-        //reloadTime = GlobalStats._instance.gunRateOfFire;
+        //bulletSpeed = GlobalStats.instance.gunBulletSpeed;
+        //reloadTime = GlobalStats.instance.gunRateOfFire;
         Reload();
     }
 
@@ -29,7 +29,7 @@ public class WeaponScript : MonoBehaviour
         if(readyToFire){
             GameObject bullet = Instantiate(bulletPrefab, gunPoint.position, gunPoint.rotation);
             //Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
-            bullet.GetComponent<Rigidbody>().AddForce(gunPoint.forward*bulletSpeed, ForceMode.Impulse);
+            bullet.GetComponent<Rigidbody>().AddForce(gunPoint.forward * bulletSpeed, ForceMode.Impulse);
             readyToFire = false;
             
             Invoke("Reload", reloadTime);
@@ -41,7 +41,7 @@ public class WeaponScript : MonoBehaviour
     }
 
     private void UpdateStats() {
-        bulletSpeed = GlobalStats._instance.gunBulletSpeed;
-        reloadTime = GlobalStats._instance.gunRateOfFire;
+        bulletSpeed = GlobalStats.instance.gunBulletSpeed;
+        reloadTime = GlobalStats.instance.gunRateOfFire;
     }
 }
