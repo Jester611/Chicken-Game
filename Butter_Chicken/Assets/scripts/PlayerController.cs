@@ -1,10 +1,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamagable
 {
     public static PlayerController instance;
-    Rigidbody rb;
+    [HideInInspector] public Rigidbody rb {get; set;}
     Camera cam;
     WeaponScript weapon;
 
@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 moveDirection;
     private Vector2 mousePosition;
+
 
     private void Awake() {
         if(instance == null){
@@ -51,4 +52,7 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(new Vector3(moveDirection.x * movementSpeed, 0f, moveDirection.y * movementSpeed), ForceMode.VelocityChange);
     }
 
+    public void TakeDamage(float damage){
+        //not implemented
+    }
 }

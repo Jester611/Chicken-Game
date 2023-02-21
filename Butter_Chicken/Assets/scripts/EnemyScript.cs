@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-public class EnemyScript : MonoBehaviour
+public class EnemyScript : MonoBehaviour, IDamagable
 {
     PlayerController player;
-    Rigidbody rb;
+    [HideInInspector] public Rigidbody rb {get; set;}
     [SerializeField] float maxHP;
     [SerializeField] float movementSpeed;
 
@@ -53,12 +53,13 @@ public class EnemyScript : MonoBehaviour
     }
 
     private void Die() {
-        Destroy(gameObject);
         OnEnemyKilled?.Invoke();
+        Destroy(gameObject);
     }
 
     private void UpdateStats() {
         movementSpeed = GlobalStats.instance.enemySpeed;
         maxHP = GlobalStats.instance.enemyHP;
     }
+
 }

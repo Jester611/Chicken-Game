@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
-{   
+{
     PlayerController player;
     
     [SerializeField] private GameObject bulletPrefab;
