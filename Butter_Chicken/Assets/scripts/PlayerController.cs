@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody rb;
     Camera cam;
+    WeaponScript weapon;
 
     [SerializeField] private LayerMask aimMask;
     [SerializeField] private float movementSpeed;
@@ -13,8 +14,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 mousePosition;
 
     private void Start() {
-        rb = GetComponent<Rigidbody>();
         cam = Camera.main;
+        rb = GetComponent<Rigidbody>();
+        weapon = GetComponent<WeaponScript>();
     }
 
     private void Update() {
@@ -32,7 +34,7 @@ public class PlayerController : MonoBehaviour
         hit.point.x, transform.position.y, hit.point.z));
 
         if (Input.GetMouseButton(0)) {
-            // gameObject.SendMessage("Fire");
+            weapon.Fire();
         }
     }
 
