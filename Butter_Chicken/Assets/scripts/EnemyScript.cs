@@ -13,6 +13,7 @@ public class EnemyScript : MonoBehaviour, IDamagable
     Vector3 direction;
 
     public static event Action OnEnemyKilled;
+    public event Action OnKilled;
 
     private void Awake() {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -27,18 +28,13 @@ public class EnemyScript : MonoBehaviour, IDamagable
 
     public void TakeDamage(float damageTaken) {
         currentHP -= damageTaken;
+        if(currentHP <= 0) Die();
     }
     private void OnEnable() {
         LevelUpScript.OnUpdateStats += UpdateStats;
     }
     private void OnDisable() {
         LevelUpScript.OnUpdateStats -= UpdateStats;
-    }
-
-    void Update() {
-        if (currentHP <= 0) {
-            Die();
-        }
     }
 
     private void FixedUpdate() {
@@ -54,6 +50,7 @@ public class EnemyScript : MonoBehaviour, IDamagable
 
     private void Die() {
         OnEnemyKilled?.Invoke();
+        OnKilled?.Invoke();
         Destroy(gameObject);
     }
 
