@@ -55,8 +55,9 @@ public class EnemyScript : MonoBehaviour, IDamagable
     }
 
     private void UpdateStats() {
-        movementSpeed = GlobalStats.instance.enemySpeed;
-        maxHP = GlobalStats.instance.enemyHP;
+        if(GlobalStats.instance != null){
+            movementSpeed = GlobalStats.instance.enemySpeed;
+            maxHP = GlobalStats.instance.enemyHP;
+        }
     }
-
 }

@@ -33,21 +33,23 @@ public class PlayerController : MonoBehaviour, IDamagable
     }
 
     private void Update() {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
+        if (!UIScript.isPaused){
+            float moveX = Input.GetAxisRaw("Horizontal");
+            float moveY = Input.GetAxisRaw("Vertical");
 
-        //handle diagonal movement in isometric envoroniment
-        moveDirection = new Vector2(moveY + moveX, moveY - moveX).normalized;
+            //handle diagonal movement in isometric envoroniment
+            moveDirection = new Vector2(moveY + moveX, moveY - moveX).normalized;
 
-        RaycastHit hit;
-        Ray aimRay = cam.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(aimRay, out hit, Mathf.Infinity, aimMask);
+            RaycastHit hit;
+            Ray aimRay = cam.ScreenPointToRay(Input.mousePosition);
+            Physics.Raycast(aimRay, out hit, Mathf.Infinity, aimMask);
 
-        transform.LookAt(new Vector3(
-        hit.point.x, transform.position.y, hit.point.z));
+            transform.LookAt(new Vector3(
+            hit.point.x, transform.position.y, hit.point.z));
 
-        if (Input.GetMouseButton(0)) {
-            weapon.Fire();
+            if (Input.GetMouseButton(0)) {
+                weapon.Fire();
+            }
         }
     }
 
