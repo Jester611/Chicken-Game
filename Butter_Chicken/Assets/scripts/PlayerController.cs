@@ -1,10 +1,14 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, IDamagable
 {   
     // ## ESSENTIALS ##
     public static PlayerController instance;
+    public static event Action OnPlayerDeath;
+
+
     [HideInInspector] public Rigidbody rb {get; set;}
     Camera cam;
     WeaponScript weapon;
@@ -13,9 +17,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     private Vector2 mousePosition;
 
     // ## PLAYER STATS ##
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private float maxHP;
+    private float movementSpeed;
+    private float maxHP;
     float currentHP;
+    float gracePeriod;
+    float invincibilityTimer; //for grace period when taking damage
 
     private void Awake() {
         if(instance == null){
@@ -34,6 +40,10 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Update() {
         if (!UIScript.isPaused){
+            
+            if(invincibilityTimer > 0){
+                invincibilityTimer -= Time.deltaTime;
+            }
             float moveX = Input.GetAxisRaw("Horizontal");
             float moveY = Input.GetAxisRaw("Vertical");
 
@@ -58,15 +68,29 @@ public class PlayerController : MonoBehaviour, IDamagable
     }
 
     public void TakeDamage(float damage){
-        //not implemented
+        if (invincibilityTimer <= 0){
+            currentHP -= damage;
+            Debug.Log($"Player takes {damage} damage");
+            if (currentHP <= 0){
+                PlayerDies();
+            }
+            invincibilityTimer = gracePeriod;
+        }
     }
 
     private void UpdateStats() {
         if(GlobalStats.instance != null){
             movementSpeed = GlobalStats.instance.playerSpeed;
             maxHP = GlobalStats.instance.playerMaxHP;
+            invincibilityTimer = GlobalStats.instance.playerInvincibilityTimer;
             currentHP = maxHP; //full heal on level
+            Debug.Log($"stats updated {currentHP} HP, {movementSpeed} movementSpeed, {invincibilityTimer} invincibilityTimer");
+            
         }
-        else{Debug.Log("not detecting singleton ffs");}
+        else{Debug.Log("player not detecting singleton ffs");}
+    }
+
+    private void PlayerDies(){
+        OnPlayerDeath?.Invoke();
     }
 }

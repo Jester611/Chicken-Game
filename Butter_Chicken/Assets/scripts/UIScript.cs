@@ -6,6 +6,7 @@ public class UIScript : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject levelUpMenu;
+    [SerializeField] GameObject deathScreen;
 
     public static bool isPaused;
     private void Start() {
@@ -26,10 +27,12 @@ public class UIScript : MonoBehaviour
 
     private void OnEnable() {
         GlobalStats.OnPlayerLevel += LevelUp;
+        PlayerController.OnPlayerDeath += DeathScreen;
     }
 
     private void OnDisable() {
         GlobalStats.OnPlayerLevel -= LevelUp;
+        PlayerController.OnPlayerDeath += DeathScreen;
     }
     private void PauseGame(){
         isPaused = true;
@@ -48,12 +51,25 @@ public class UIScript : MonoBehaviour
     }
     
     private void LevelUp(){
-        //todo: opens up level up menu
+        isPaused = true;
+        Time.timeScale = 0f;
+        levelUpMenu.SetActive(true);
     }
 
     public void QuitGame(){
-        //main menu scene name once it's done
+        // quit to main menu
+        // scene name once it's done
 
         //SceneManager.LoadScene("MainMenu");
+    }
+    
+    private void DeathScreen(){
+        isPaused = true; // prevents player movement
+        deathScreen.SetActive(true);
+    }
+
+    public void RestartScene(){
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

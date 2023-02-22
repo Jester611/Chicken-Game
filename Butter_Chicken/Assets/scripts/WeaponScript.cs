@@ -62,5 +62,6 @@ public class WeaponScript : MonoBehaviour
             reloadTime = GlobalStats.instance.gunRateOfFire;
             recoil = GlobalStats.instance.gunRecoil;
         }
+        else{Debug.Log("weapon not detecting singleton ffs");}
     }
 }

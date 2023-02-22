@@ -64,4 +64,14 @@ public class BulletScript : MonoBehaviour
         }
         Destroy(gameObject);
     }
+    private void GetStats(){
+        if(GlobalStats.instance != null){
+            size = GlobalStats.instance.bulletSize;
+            explosionRadius = GlobalStats.instance.bulletExplosiveRadius;
+            knockback = GlobalStats.instance.bulletKnockback;
+            damage = GlobalStats.instance.bulletDamage;
+            transform.localScale = new Vector3(size, size, size);
+        }
+        else{Debug.Log("bullet not detecting singleton ffs");}
+    }
 }
