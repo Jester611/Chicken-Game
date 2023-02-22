@@ -8,20 +8,20 @@ public class PlayerController : MonoBehaviour, IDamagable
     public static PlayerController instance;
     public static event Action OnPlayerDeath;
 
-
     [HideInInspector] public Rigidbody rb {get; set;}
     Camera cam;
     WeaponScript weapon;
     [SerializeField] private LayerMask aimMask;
     private Vector2 moveDirection;
     private Vector2 mousePosition;
+    float gracePeriod; // brief invincibility after taking damage
+
 
     // ## PLAYER STATS ##
     private float movementSpeed;
     private float maxHP;
-    float currentHP;
-    float gracePeriod;
-    float invincibilityTimer; //for grace period when taking damage
+    [HideInInspector] public float currentHP;
+    float invincibilityDuration;
 
     private void Awake() {
         if(instance == null){
@@ -29,20 +29,19 @@ public class PlayerController : MonoBehaviour, IDamagable
         }else{
             Destroy(gameObject);
         }
-        UpdateStats();
     }
 
     private void Start() {
         cam = Camera.main;
         rb = GetComponent<Rigidbody>();
         weapon = GetComponent<WeaponScript>();
+        UpdateStats();
     }
 
     private void Update() {
         if (!UIScript.isPaused){
-            
-            if(invincibilityTimer > 0){
-                invincibilityTimer -= Time.deltaTime;
+            if(gracePeriod > 0){
+                gracePeriod -= Time.deltaTime;
             }
             float moveX = Input.GetAxisRaw("Horizontal");
             float moveY = Input.GetAxisRaw("Vertical");
@@ -68,23 +67,23 @@ public class PlayerController : MonoBehaviour, IDamagable
     }
 
     public void TakeDamage(float damage){
-        if (invincibilityTimer <= 0){
+        if (gracePeriod <= 0){
             currentHP -= damage;
-            Debug.Log($"Player takes {damage} damage");
             if (currentHP <= 0){
                 PlayerDies();
             }
-            invincibilityTimer = gracePeriod;
+            gracePeriod = invincibilityDuration;
+            UIScript.instance.UpdateHealthBar();
         }
     }
 
     private void UpdateStats() {
-        if(GlobalStats.instance != null){
-            movementSpeed = GlobalStats.instance.playerSpeed;
-            maxHP = GlobalStats.instance.playerMaxHP;
-            invincibilityTimer = GlobalStats.instance.playerInvincibilityTimer;
+        if(UIScript.instance != null){
+            movementSpeed = UIScript.instance.playerSpeed;
+            maxHP = UIScript.instance.playerMaxHP;
+            invincibilityDuration = UIScript.instance.playerInvincibilityTimer;
             currentHP = maxHP; //full heal on level
-            Debug.Log($"stats updated {currentHP} HP, {movementSpeed} movementSpeed, {invincibilityTimer} invincibilityTimer");
+            Debug.Log($"stats updated {currentHP} HP, {movementSpeed} movementSpeed, {invincibilityDuration} invincibilityTimer");
             
         }
         else{Debug.Log("player not detecting singleton ffs");}

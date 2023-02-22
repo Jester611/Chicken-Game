@@ -52,13 +52,14 @@ public class EnemyScript : MonoBehaviour, IDamagable
         OnEnemyKilled?.Invoke();
         OnKilled?.Invoke();
         Destroy(gameObject);
+        Debug.Log("enemy died");
     }
 
     private void UpdateStats() {
-        if(GlobalStats.instance != null){
-            movementSpeed = GlobalStats.instance.enemySpeed;
-            maxHP = GlobalStats.instance.enemyHP;
-            attackDamage = GlobalStats.instance.enemyAttack;
+        if(UIScript.instance != null){
+            movementSpeed = UIScript.instance.enemySpeed;
+            maxHP = UIScript.instance.enemyHP;
+            attackDamage = UIScript.instance.enemyAttack;
         }
         else{Debug.Log("enemy not detecting singleton ffs");}
     }

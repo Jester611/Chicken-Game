@@ -12,12 +12,8 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private float damage;
 
     private void Start() {
-        size = GlobalStats.instance.bulletSize;
-        explosionRadius = GlobalStats.instance.bulletExplosiveRadius;
-        knockback = GlobalStats.instance.bulletKnockback;
-        damage = GlobalStats.instance.bulletDamage;
-        transform.localScale = new Vector3(size, size, size);
         Destroy(gameObject, 10f);
+        GetStats();
     }
 
     private void OnCollisionEnter(Collision other) {
@@ -65,13 +61,13 @@ public class BulletScript : MonoBehaviour
         Destroy(gameObject);
     }
     private void GetStats(){
-        if(GlobalStats.instance != null){
-            size = GlobalStats.instance.bulletSize;
-            explosionRadius = GlobalStats.instance.bulletExplosiveRadius;
-            knockback = GlobalStats.instance.bulletKnockback;
-            damage = GlobalStats.instance.bulletDamage;
+        if(UIScript.instance != null){
+            size = UIScript.instance.bulletSize;
+            explosionRadius = UIScript.instance.bulletExplosiveRadius;
+            knockback = UIScript.instance.bulletKnockback;
+            damage = UIScript.instance.bulletDamage;
             transform.localScale = new Vector3(size, size, size);
         }
-        else{Debug.Log("bullet not detecting singleton ffs");}
+        else{Debug.Log("bullet not detecting singleton ffs, running from default stats instead");}
     }
 }

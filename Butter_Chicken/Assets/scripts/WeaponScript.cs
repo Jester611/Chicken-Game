@@ -17,12 +17,12 @@ public class WeaponScript : MonoBehaviour
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
-        UpdateStats();
         Reload();
     }
 
     private void Start() {
         player = PlayerController.instance;
+        UpdateStats();
     }
 
     private void OnEnable() {
@@ -57,10 +57,10 @@ public class WeaponScript : MonoBehaviour
     }
 
     private void UpdateStats() {
-        if(GlobalStats.instance != null){
-            bulletSpeed = GlobalStats.instance.gunBulletSpeed;
-            reloadTime = GlobalStats.instance.gunRateOfFire;
-            recoil = GlobalStats.instance.gunRecoil;
+        if(UIScript.instance != null){
+            bulletSpeed = UIScript.instance.gunBulletSpeed;
+            reloadTime = UIScript.instance.gunRateOfFire;
+            recoil = UIScript.instance.gunRecoil;
         }
         else{Debug.Log("weapon not detecting singleton ffs");}
     }

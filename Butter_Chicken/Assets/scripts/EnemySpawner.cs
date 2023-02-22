@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
     public event System.Action WaveFinished;
 
     private void Start() {
-        StartNextWave();
+        Invoke("StartNextWave", 2f);
     }
 
     void StartNextWave(){
