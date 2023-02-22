@@ -5,15 +5,19 @@ public class EnemyScript : MonoBehaviour, IDamagable
 {
     PlayerController player;
     [HideInInspector] public Rigidbody rb {get; set;}
-    [SerializeField] float maxHP;
     [SerializeField] float movementSpeed;
 
-    private float currentHP;
+    public float maxHealth {get; set;}
+    public float currentHealth {get; set;} 
+
     private float distance;
     Vector3 direction;
 
+
+
     public static event Action OnEnemyKilled;
-    public event Action OnKilled;
+    public event Action OnDeath;
+    public event Action OnDamaged;
 
     private void Awake() {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -22,13 +26,13 @@ public class EnemyScript : MonoBehaviour, IDamagable
     private void Start() {
         player = PlayerController.instance;
         movementSpeed = GlobalStats.instance.enemySpeed;
-        maxHP = GlobalStats.instance.enemyHP;
-        currentHP = maxHP;
+        maxHealth = GlobalStats.instance.enemyHP;
+        currentHealth = maxHealth;
     }
 
     public void TakeDamage(float damageTaken) {
-        currentHP -= damageTaken;
-        if(currentHP <= 0) Die();
+        currentHealth -= damageTaken;
+        if(currentHealth <= 0) Die();
     }
     private void OnEnable() {
         LevelUpScript.OnUpdateStats += UpdateStats;
@@ -49,14 +53,14 @@ public class EnemyScript : MonoBehaviour, IDamagable
     }
 
     private void Die() {
+        OnDeath?.Invoke();
         OnEnemyKilled?.Invoke();
-        OnKilled?.Invoke();
         Destroy(gameObject);
     }
 
     private void UpdateStats() {
         movementSpeed = GlobalStats.instance.enemySpeed;
-        maxHP = GlobalStats.instance.enemyHP;
+        maxHealth = GlobalStats.instance.enemyHP;
     }
 
 }

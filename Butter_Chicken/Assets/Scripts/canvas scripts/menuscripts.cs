@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class menuscripts : MonoBehaviour
+public class MenuScripts : MonoBehaviour
 {
     public void PlayGame()
     {

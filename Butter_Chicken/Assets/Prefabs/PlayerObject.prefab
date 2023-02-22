@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 4365961608800672820}
   m_Layer: 7
   m_Name: PlayerObject
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aimMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 64
   movementSpeed: 2
 --- !u!114 &4365961608800672820
 MonoBehaviour:
@@ -409,11 +409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49a9bd697694344489d9a2d8469b0ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 5350594099087066063}
   bulletPrefab: {fileID: 8128116052142201782, guid: 03ef6f3fc27ec7b4f977a18397bd3047, type: 3}
   gunPoint: {fileID: 6926536914989624904}
-  bulletSpeed: 15
-  reloadTime: 0.5
 --- !u!1 &6138554503172630142
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class healtbarscript : MonoBehaviour
 {
-    public playerhealth playerhealth;
     private Image healthbar;
 
     private void Start()
@@ -17,7 +16,6 @@ public class healtbarscript : MonoBehaviour
 
     private void Update()
     {
-        healthbar.fillAmount = playerhealth.currenthealth / playerhealth.maxhealth;
 
     }
 

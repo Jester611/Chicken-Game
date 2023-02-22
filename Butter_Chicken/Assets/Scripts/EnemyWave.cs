@@ -26,7 +26,7 @@ public class EnemyWave : ScriptableObject
                 enemy.transform.parent = parent;
                 currentCount++;
                 totalCurrentCount++;
-                enemy.OnKilled += () => {currentCount--;};
+                enemy.OnDeath += () => {currentCount--;};
                 yield return new WaitForSeconds(1f / spawnRate + Random.Range(0, 2 * spawnRandomness) - spawnRandomness);
             }else yield return new WaitForSeconds(0.2f);
         }

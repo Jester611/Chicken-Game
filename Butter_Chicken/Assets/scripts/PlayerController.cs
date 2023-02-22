@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(WeaponScript))]
 public class PlayerController : MonoBehaviour, IDamagable
 {
     public static PlayerController instance;
@@ -10,10 +12,14 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     [SerializeField] private LayerMask aimMask;
     [SerializeField] private float movementSpeed;
+    public float maxHealth {get; set;}
+    public float currentHealth {get; set;}
 
     private Vector2 moveDirection;
     private Vector2 mousePosition;
 
+    public event Action OnDamaged;
+    public event Action OnDeath;
 
     private void Awake() {
         if(instance == null){
@@ -40,8 +46,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         Ray aimRay = cam.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(aimRay, out hit, Mathf.Infinity, aimMask);
 
-        transform.LookAt(new Vector3(
-        hit.point.x, transform.position.y, hit.point.z));
+        transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
 
         if (Input.GetMouseButton(0)) {
             weapon.Fire();
@@ -53,6 +58,10 @@ public class PlayerController : MonoBehaviour, IDamagable
     }
 
     public void TakeDamage(float damage){
-        //not implemented
+        currentHealth -= damage;
+        OnDamaged?.Invoke();
+        if(currentHealth <= 0){
+            OnDeath?.Invoke();
+        }
     }
 }
