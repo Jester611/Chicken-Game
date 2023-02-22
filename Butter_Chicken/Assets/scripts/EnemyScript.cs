@@ -1,27 +1,34 @@
 using System;
 using UnityEngine;
 
-public class EnemyScript : MonoBehaviour
+public class EnemyScript : MonoBehaviour, IDamagable
 {
-    [SerializeField] Transform player;
-    Rigidbody rb;
+    PlayerController player;
+    [HideInInspector] public Rigidbody rb {get; set;}
     [SerializeField] float maxHP;
     [SerializeField] float movementSpeed;
+
     private float currentHP;
     private float distance;
     Vector3 direction;
 
     public static event Action OnEnemyKilled;
+    public event Action OnKilled;
 
     private void Awake() {
         rb = gameObject.GetComponent<Rigidbody>();
-        //movementSpeed = GlobalStats.instance.enemySpeed;
-        //maxHP = GlobalStats.instance.enemyHP;
+    }
+
+    private void Start() {
+        player = PlayerController.instance;
+        movementSpeed = GlobalStats.instance.enemySpeed;
+        maxHP = GlobalStats.instance.enemyHP;
         currentHP = maxHP;
     }
 
     public void TakeDamage(float damageTaken) {
         currentHP -= damageTaken;
+        if(currentHP <= 0) Die();
     }
     private void OnEnable() {
         LevelUpScript.OnUpdateStats += UpdateStats;
@@ -30,15 +37,9 @@ public class EnemyScript : MonoBehaviour
         LevelUpScript.OnUpdateStats -= UpdateStats;
     }
 
-    void Update() {
-        if (currentHP <= 0) {
-            Die();
-        }
-    }
-
     private void FixedUpdate() {
-        distance = Vector3.Distance(transform.position, player.position);
-        direction = player.position - transform.position;
+        distance = Vector3.Distance(transform.position, player.transform.position);
+        direction = player.transform.position - transform.position;
         direction.Normalize();
 
         rb.AddForce(direction * movementSpeed, ForceMode.VelocityChange);
@@ -48,12 +49,16 @@ public class EnemyScript : MonoBehaviour
     }
 
     private void Die() {
-        Destroy(gameObject);
         OnEnemyKilled?.Invoke();
+        OnKilled?.Invoke();
+        Destroy(gameObject);
     }
 
     private void UpdateStats() {
-        movementSpeed = GlobalStats.instance.enemySpeed;
-        maxHP = GlobalStats.instance.enemyHP;
+        if(GlobalStats.instance != null){
+            movementSpeed = GlobalStats.instance.enemySpeed;
+            maxHP = GlobalStats.instance.enemyHP;
+        }
     }
+
 }

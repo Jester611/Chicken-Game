@@ -1,20 +1,35 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
-{
-    Rigidbody rb;
+public class PlayerController : MonoBehaviour, IDamagable
+{   
+    // ## ESSENTIALS ##
+    public static PlayerController instance;
+    [HideInInspector] public Rigidbody rb {get; set;}
     Camera cam;
-
+    WeaponScript weapon;
     [SerializeField] private LayerMask aimMask;
-    [SerializeField] private float movementSpeed;
-
     private Vector2 moveDirection;
     private Vector2 mousePosition;
 
+    // ## PLAYER STATS ##
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private float maxHP;
+    float currentHP;
+
+    private void Awake() {
+        if(instance == null){
+            instance = this;
+        }else{
+            Destroy(gameObject);
+        }
+        UpdateStats();
+    }
+
     private void Start() {
-        rb = GetComponent<Rigidbody>();
         cam = Camera.main;
+        rb = GetComponent<Rigidbody>();
+        weapon = GetComponent<WeaponScript>();
     }
 
     private void Update() {
@@ -32,7 +47,7 @@ public class PlayerController : MonoBehaviour
         hit.point.x, transform.position.y, hit.point.z));
 
         if (Input.GetMouseButton(0)) {
-            gameObject.SendMessage("Fire");
+            weapon.Fire();
         }
     }
 
@@ -40,4 +55,16 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(new Vector3(moveDirection.x * movementSpeed, 0f, moveDirection.y * movementSpeed), ForceMode.VelocityChange);
     }
 
+    public void TakeDamage(float damage){
+        //not implemented
+    }
+
+    private void UpdateStats() {
+        if(GlobalStats.instance != null){
+            movementSpeed = GlobalStats.instance.playerSpeed;
+            maxHP = GlobalStats.instance.playerMaxHP;
+            currentHP = maxHP; //full heal on level
+        }
+        else{Debug.Log("not detecting singleton ffs");}
+    }
 }

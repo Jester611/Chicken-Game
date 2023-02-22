@@ -22,51 +22,46 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         GameObject hit = other.gameObject;
-        Rigidbody enemyRB;
+        IDamagable damagable = hit.GetComponent<IDamagable>();
 
         // ## ON HIT DAMAGE + KNOCKBACK ##
-        if (hit.CompareTag("Enemy")) {
+        if (damagable != null) {
+
             // Take damage
-            hit.GetComponent<EnemyScript>().TakeDamage(damage);
+            damagable.TakeDamage(damage);
 
             // Knockback
-            enemyRB = hit.GetComponent<Rigidbody>();
             Vector3 direction = gameObject.GetComponent<Rigidbody>().velocity.normalized;
-            enemyRB.AddForce(direction * knockback, ForceMode.Impulse);
+            damagable.gameObject.GetComponent<Rigidbody>().AddForce(direction * knockback, ForceMode.Impulse);
         }
 
         // ## EXPLOSIVE KNOCKBACK + DAMAGE ##
-        Collider[] affectedObjects = Physics.OverlapSphere(transform.position, explosionRadius);
+        if(explosionRadius > 0)
+        // this hopefully will prevent infinite force crash
+        {        
+            Collider[] affectedObjects = Physics.OverlapSphere(transform.position, explosionRadius);
 
-        foreach (Collider collider in affectedObjects) {
-            GameObject affected = collider.gameObject;
+            foreach (Collider collider in affectedObjects) {
+                damagable = collider.gameObject.GetComponent<IDamagable>();
 
-            if (affected.CompareTag("Enemy") && hit != affected) {
-                enemyRB = collider.GetComponent<Rigidbody>();
-
-                if (enemyRB != null) {
-                    Vector3 direction;
-                    float powerFalloff;
-                    float distance;
-
+                if (damagable != null && hit != collider.gameObject) {
                     // damage and knockback fall off with distance
-                    distance = Vector3.Distance(transform.position, affected.transform.position);
-                    powerFalloff = (explosionRadius - distance) / explosionRadius;
+                    float distance = Vector3.Distance(transform.position, damagable.rb.position);
+                    float powerFalloff = (explosionRadius - distance) / explosionRadius;
 
                     // Take Damage
-                    hit.GetComponent<EnemyScript>().TakeDamage(powerFalloff * damage);
+                    damagable.TakeDamage(powerFalloff * damage);
 
                     // Knockback
-                    direction = affected.transform.position - transform.position;
-                    Debug.Log(direction);
-                    enemyRB.AddForce(
+                    Vector3 direction = damagable.rb.position - transform.position;
+
+                    damagable.rb.AddForce(
                         direction.normalized * powerFalloff * knockback,
                         ForceMode.Impulse
                     );
-                } else Debug.Log("rigidbody null");
+                }
             }
         }
-
         Destroy(gameObject);
     }
 }
