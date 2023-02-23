@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
-        Debug.Log("Started.");
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
