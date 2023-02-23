@@ -61,47 +61,47 @@ public class Upgrade : ScriptableObject
         Multiply();
     }
     private void Add(){
-        UIScript.instance.bulletDamage += add_bulletDamage;
-        UIScript.instance.bulletExplosiveRadius += add_bulletExplosiveRadius;
-        UIScript.instance.bulletKnockback += add_bulletKnockback;
+        GameManager.instance.bulletDamage += add_bulletDamage;
+        GameManager.instance.bulletExplosiveRadius += add_bulletExplosiveRadius;
+        GameManager.instance.bulletKnockback += add_bulletKnockback;
 
-        UIScript.instance.gunRateOfFire += add_gunRateOfFire;
-        UIScript.instance.gunBulletSpeed += add_gunBulletSpeed;
-        UIScript.instance.gunRecoil += add_gunRecoil;
-        UIScript.instance.gunSpread += add_gunSpread;
+        GameManager.instance.gunRateOfFire += add_gunRateOfFire;
+        GameManager.instance.gunBulletSpeed += add_gunBulletSpeed;
+        GameManager.instance.gunRecoil += add_gunRecoil;
+        GameManager.instance.gunSpread += add_gunSpread;
 
-        UIScript.instance.playerSpeed += add_playerSpeed;
-        UIScript.instance.playerMaxHP += add_playerMaxHP;
-        UIScript.instance.playerInvincibilityTimer += add_playerInvincibilityTimer;
-        UIScript.instance.playerWeight += add_playerWeight;
-        UIScript.instance.playerDrag += add_playerDrag;
+        GameManager.instance.playerSpeed += add_playerSpeed;
+        GameManager.instance.playerMaxHP += add_playerMaxHP;
+        GameManager.instance.playerInvincibilityTimer += add_playerInvincibilityTimer;
+        GameManager.instance.playerWeight += add_playerWeight;
+        GameManager.instance.playerDrag += add_playerDrag;
 
-        UIScript.instance.enemyHP += add_enemyHP;
-        UIScript.instance.enemySpeed += add_enemySpeed;
-        UIScript.instance.enemySize += add_enemySize;
-        UIScript.instance.enemyAttack += add_enemyAttack;
-        UIScript.instance.enemyWeight += add_enemyWeight;
+        GameManager.instance.enemyHP += add_enemyHP;
+        GameManager.instance.enemySpeed += add_enemySpeed;
+        GameManager.instance.enemySize += add_enemySize;
+        GameManager.instance.enemyAttack += add_enemyAttack;
+        GameManager.instance.enemyWeight += add_enemyWeight;
     }
     private void Multiply(){
-        UIScript.instance.bulletDamage *= mult_bulletDamage;
-        UIScript.instance.bulletExplosiveRadius *= mult_bulletExplosiveRadius;
-        UIScript.instance.bulletKnockback *= mult_bulletKnockback;
+        GameManager.instance.bulletDamage *= mult_bulletDamage;
+        GameManager.instance.bulletExplosiveRadius *= mult_bulletExplosiveRadius;
+        GameManager.instance.bulletKnockback *= mult_bulletKnockback;
 
-        UIScript.instance.gunRateOfFire *= mult_gunRateOfFire;
-        UIScript.instance.gunBulletSpeed *= mult_gunBulletSpeed;
-        UIScript.instance.gunRecoil *= mult_gunRecoil;
-        UIScript.instance.gunSpread *= mult_gunSpread;
+        GameManager.instance.gunRateOfFire *= mult_gunRateOfFire;
+        GameManager.instance.gunBulletSpeed *= mult_gunBulletSpeed;
+        GameManager.instance.gunRecoil *= mult_gunRecoil;
+        GameManager.instance.gunSpread *= mult_gunSpread;
 
-        UIScript.instance.playerSpeed *= mult_playerSpeed;
-        UIScript.instance.playerMaxHP *= mult_playerMaxHP;
-        UIScript.instance.playerInvincibilityTimer *= mult_playerInvincibilityTimer;
-        UIScript.instance.playerWeight *= mult_playerWeight;
-        UIScript.instance.playerDrag *= mult_playerDrag;
+        GameManager.instance.playerSpeed *= mult_playerSpeed;
+        GameManager.instance.playerMaxHP *= mult_playerMaxHP;
+        GameManager.instance.playerInvincibilityTimer *= mult_playerInvincibilityTimer;
+        GameManager.instance.playerWeight *= mult_playerWeight;
+        GameManager.instance.playerDrag *= mult_playerDrag;
 
-        UIScript.instance.enemyHP *= mult_enemyHP;
-        UIScript.instance.enemySpeed *= mult_enemySpeed;
-        UIScript.instance.enemySize *= mult_enemySize;
-        UIScript.instance.enemyAttack *= mult_enemyAttack;
-        UIScript.instance.enemyWeight *= mult_enemyWeight;
+        GameManager.instance.enemyHP *= mult_enemyHP;
+        GameManager.instance.enemySpeed *= mult_enemySpeed;
+        GameManager.instance.enemySize *= mult_enemySize;
+        GameManager.instance.enemyAttack *= mult_enemyAttack;
+        GameManager.instance.enemyWeight *= mult_enemyWeight;
     }
 }

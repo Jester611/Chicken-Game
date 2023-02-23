@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIScript : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static UIScript instance  { get; private set; }
+    public static GameManager instance  { get; private set; }
     public static event Action OnLevelUp;
 
     // ## MENUS ##
@@ -16,48 +16,40 @@ public class UIScript : MonoBehaviour
 
     public static bool isPaused;
 
-
     // ## COUNTERS ##
     [SerializeField] Image healthBar;
     [SerializeField] Image expBar;
 
     // ## VARIABLES RELATED TO UPGRADES ##
     [Header("Bullet")]
-    public float bulletDamage;
-    public float bulletSize;
-    public float bulletExplosiveRadius;
-    public float bulletKnockback;
+    public float bulletDamage = 5;
+    public float bulletExplosiveRadius = 0;
+    public float bulletKnockback = 0;
     [Header("Weapon")]
-    public float gunRateOfFire;
-    public float gunBulletSpeed;
-    public float gunRecoil;
-    public float gunSpread; //not yet implemented
-
+    public float gunRateOfFire = 0.7f;
+    public float gunBulletSpeed = 15f;
+    public float gunRecoil = 0f;
+    public float gunSpread = 0f;
     [Header("Player")]
-    public float playerSpeed;
-    public float playerMaxHP;
-    public float playerInvincibilityTimer;
-    public float playerWeight;
-    public float playerDrag;
-
+    public float playerSpeed = 1f;
+    public float playerMaxHP = 50f;
+    public float playerInvincibilityTimer = 0.4f;
+    public float playerWeight = 1f;
+    public float playerDrag = 8f;
     [Header("Enemy")]
-    public float enemyHP;
-    public float enemySpeed;
-    public float enemySize;
-    public float enemyAttack;
-    public float enemyWeight;
+  public float enemyHP = 10f;
+    public float enemySpeed = 0.02f;
+    public float enemySize = 1f;
+    public float enemyAttack = 8f;
+    public float enemyWeight = 0.2f;
 
-    // Player levels
-    [Header(header: "Player Levels")]
+    // ## PLAYER LEVELS ##
+    private int playerXP = 0;
+    private int playerLevelRequirement = 8;
+    private int playerLevel = 1;
 
-    private int playerXP;
-    private int playerLevelRequirement = 10;
-    private int playerLevel;
+    private DefaultStats defaultstats;
 
-    private void Start() {
-        pauseMenu.SetActive(false);
-        settingsMenu.SetActive(false);
-    }
     private void Awake() {
         if(instance == null){
             instance = this;
@@ -66,13 +58,18 @@ public class UIScript : MonoBehaviour
         }
     }
 
+    private void Start() {
+        pauseMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+    }
+
     private void OnEnable() {
-        EnemyScript.OnEnemyKilled += GainXP;
+        EnemyScript.OnGainXP += GainXP;
         PlayerController.OnPlayerDeath += DeathScreen;
     }
 
     private void OnDisable() {
-        EnemyScript.OnEnemyKilled -= GainXP;
+        EnemyScript.OnGainXP -= GainXP;
         PlayerController.OnPlayerDeath += DeathScreen;
     }
 
@@ -107,7 +104,7 @@ public class UIScript : MonoBehaviour
     }
 
     public void UpdateHealthBar(){
-        healthBar.fillAmount = (PlayerController.instance.currentHP/playerMaxHP);
+        healthBar.fillAmount = (PlayerController.instance.currentHealth/playerMaxHP);
     }
     
     private void GainXP() {
@@ -127,6 +124,7 @@ public class UIScript : MonoBehaviour
         Time.timeScale = 0f;
         levelUpMenu.SetActive(true);
         OnLevelUp?.Invoke();
+        playerLevel ++;
         playerXP = 0;
     }
 
@@ -146,6 +144,5 @@ public class UIScript : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //gonna need a script resetting stats to default values i think
     }
 }

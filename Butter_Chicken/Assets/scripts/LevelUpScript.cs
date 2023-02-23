@@ -7,7 +7,7 @@ public class LevelUpScript : MonoBehaviour
 {
     public static event Action OnUpdateStats;
 
-    //List of upgrades.
+    // LIST OF UPGRADES NEEDS TO BE MANUALLY SPECIFIED FROM UPGRADE SCRIPTABLE OBJECTS
     [SerializeField] List<Upgrade> upgrades;
     
     // RANDOMLY CHOSEN UPGRADES
@@ -24,12 +24,13 @@ public class LevelUpScript : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI option3Name;
     [SerializeField] TextMeshProUGUI option3Desc;
+
     private void OnEnable() {
-        UIScript.OnLevelUp += RandomizeUpgrades;
+        GameManager.OnLevelUp += RandomizeUpgrades;
     }
 
     private void OnDisable() {
-        UIScript.OnLevelUp -= RandomizeUpgrades;
+        GameManager.OnLevelUp -= RandomizeUpgrades;
     }
 
     private void RandomizeUpgrades() {
@@ -66,25 +67,31 @@ public class LevelUpScript : MonoBehaviour
     public void UpgradeOption1(){
         if(option1 != null){
             option1.Apply();
-            UpgradeComplete();
         }
+        else{Debug.Log("upgrade returned null what the fuck");}
+        UpgradeComplete();
+
     }
     public void UpgradeOption2(){
         if(option2 != null){
             option2.Apply();
-            UpgradeComplete();
         }
+        else{Debug.Log("upgrade returned null what the fuck");}
+        UpgradeComplete();
+
     }
     public void UpgradeOption3(){
         if(option3 != null){
             option3.Apply();
-            UpgradeComplete();
         }
+        else{Debug.Log("upgrade returned null what the fuck");}
+        UpgradeComplete();
     }
 
     // holy shit if it works at first attempt imma touch myself tonight
+    // for the record it did not work at first attempt - A3
     private void UpgradeComplete(){
-        UIScript.isPaused = false;
+        GameManager.isPaused = false;
         Time.timeScale = 1f;
         OnUpdateStats?.Invoke();
         Debug.Log("UPGRADE COMPLETE");

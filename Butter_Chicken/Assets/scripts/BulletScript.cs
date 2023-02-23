@@ -6,7 +6,6 @@ public class BulletScript : MonoBehaviour
 
     // these values will come from a singleton to handle upgrades
 
-    private float size;
     private float explosionRadius;
     private float knockback;
     private float damage;
@@ -61,10 +60,8 @@ public class BulletScript : MonoBehaviour
         Destroy(gameObject);
     }
     private void GetStats(){
-        size = GameManager.instance.bulletSize;
         explosionRadius = GameManager.instance.bulletExplosiveRadius;
         knockback = GameManager.instance.bulletKnockback;
         damage = GameManager.instance.bulletDamage;
-        transform.localScale = new Vector3(size, size, size);
     }
 }

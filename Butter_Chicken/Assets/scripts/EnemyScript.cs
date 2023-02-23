@@ -5,30 +5,35 @@ public class EnemyScript : MonoBehaviour, IDamagable
 {
     PlayerController player;
     [HideInInspector] public Rigidbody rb {get; set;}
-    [SerializeField] float maxHP;
     [SerializeField] float movementSpeed;
     [SerializeField] float attackDamage;
 
-    private float currentHP;
+    public float maxHealth {get; set;}
+    public float currentHealth {get; set;} 
+
     private float distance;
     Vector3 direction;
 
-    public static event Action OnEnemyKilled;
-    public event Action OnKilled;
+    public static event Action OnGainXP;
+    public event Action OnDeath;
+    public event Action OnDamaged;
 
     private void Awake() {
         rb = gameObject.GetComponent<Rigidbody>();
     }
 
     private void Start() {
-        UpdateStats();
-        currentHP = maxHP;
         player = PlayerController.instance;
+        currentHealth = maxHealth;
+        UpdateStats();
     }
 
-    public void TakeDamage(float damageTaken) {
-        currentHP -= damageTaken;
-        if(currentHP <= 0) Die();
+    public void TakeDamage(float damage){
+        currentHealth -= damage;
+        OnDamaged?.Invoke();
+        if(currentHealth <= 0) {
+            Die();
+        }
     }
     private void OnEnable() {
         LevelUpScript.OnUpdateStats += UpdateStats;
@@ -41,28 +46,23 @@ public class EnemyScript : MonoBehaviour, IDamagable
         distance = Vector3.Distance(transform.position, player.transform.position);
         direction = player.transform.position - transform.position;
         direction.Normalize();
-
-        rb.AddForce(direction * movementSpeed, ForceMode.Impulse);
+        
+        rb.AddForce(direction*movementSpeed, ForceMode.VelocityChange);
 
         float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
     }
 
     private void Die() {
-        OnEnemyKilled?.Invoke();
-        OnKilled?.Invoke();
+        OnGainXP?.Invoke();
+        OnDeath?.Invoke();
         Destroy(gameObject);
-        Debug.Log("enemy died");
     }
 
     private void UpdateStats() {
-        if(UIScript.instance != null){
-            movementSpeed = UIScript.instance.enemySpeed;
-            maxHP = UIScript.instance.enemyHP;
-            attackDamage = UIScript.instance.enemyAttack;
-            rb.mass = UIScript.instance.enemyWeight;
-        }
-        else{Debug.Log("enemy not detecting singleton ffs");}
+        movementSpeed = GameManager.instance.enemySpeed;
+        maxHealth = GameManager.instance.enemyHP;
+        attackDamage = GameManager.instance.enemyAttack;
     }
 
     // Aerial: on collision damage is boring as fuck but I'm too shit of a programmer to write anything better
@@ -72,4 +72,5 @@ public class EnemyScript : MonoBehaviour, IDamagable
             player.TakeDamage(attackDamage);
         }
     }
+
 }

@@ -2,13 +2,15 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour, IDamagable
+public class PlayerController : MonoBehaviour
+
 {   
     // ## ESSENTIALS ##
     public static PlayerController instance;
     public static event Action OnPlayerDeath;
 
     [HideInInspector] public Rigidbody rb {get; set;}
+
     Camera cam;
     WeaponScript weapon;
     [SerializeField] private LayerMask aimMask;
@@ -18,9 +20,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 
     // ## PLAYER STATS ##
+    public float maxHealth {get; set;}
+    public float currentHealth {get; set;} 
     private float movementSpeed;
-    private float maxHP;
-    [HideInInspector] public float currentHP;
     float invincibilityDuration;
 
     private void Awake() {
@@ -39,7 +41,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     }
 
     private void Update() {
-        if (!UIScript.isPaused){
+        if (!GameManager.isPaused){
             if(gracePeriod > 0){
                 gracePeriod -= Time.deltaTime;
             }
@@ -68,25 +70,24 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void TakeDamage(float damage){
         if (gracePeriod <= 0){
-            currentHP -= damage;
-            if (currentHP <= 0){
+            currentHealth -= damage;
+            if (currentHealth <= 0){
                 PlayerDies();
             }
             gracePeriod = invincibilityDuration;
-            UIScript.instance.UpdateHealthBar();
+            GameManager.instance.UpdateHealthBar();
         }
     }
 
     private void UpdateStats() {
-        if(UIScript.instance != null){
-            movementSpeed = UIScript.instance.playerSpeed;
-            maxHP = UIScript.instance.playerMaxHP;
-            invincibilityDuration = UIScript.instance.playerInvincibilityTimer;
-            rb.mass = UIScript.instance.playerWeight;
-            rb.drag = UIScript.instance.playerDrag;
-            currentHP = maxHP; //full heal on level
-            Debug.Log($"stats updated {currentHP} HP, {movementSpeed} movementSpeed, {invincibilityDuration} invincibilityTimer");
-            
+        if(GameManager.instance != null){
+            movementSpeed = GameManager.instance.playerSpeed;
+            maxHealth = GameManager.instance.playerMaxHP;
+            invincibilityDuration = GameManager.instance.playerInvincibilityTimer;
+            rb.mass = GameManager.instance.playerWeight;
+            rb.drag = GameManager.instance.playerDrag;
+            currentHealth = maxHealth; //full heal on level
+            Debug.Log($"stats updated {currentHealth} HP, {movementSpeed} movementSpeed, {invincibilityDuration} invincibilityTimer");
         }
         else{Debug.Log("player not detecting singleton ffs");}
     }

@@ -41,13 +41,14 @@ public class WeaponScript : MonoBehaviour
             // Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
             // this didn't look very good in gameplay though
 
+            //TODO: ADD BULLET SPREAD
+
             bullet.GetComponent<Rigidbody>().AddForce(gunPoint.forward * bulletSpeed, ForceMode.VelocityChange);
-            //TODO: IMPLEMENT BULLET SPREAD
             readyToFire = false;
             Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
             // gun recoil
             rb.AddForce(-gunPoint.forward*recoil, ForceMode.Impulse);
-
+            // reload timer
             Invoke("Reload", reloadTime);
         }
     }
