@@ -873,7 +873,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 86355977557093833}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
@@ -1309,7 +1309,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 86355977557093833}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
         m_MethodName: RestartScene
         m_Mode: 1
@@ -3124,7 +3124,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 86355977557093833}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIScript, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
@@ -3459,7 +3459,7 @@ GameObject:
   - component: {fileID: 86355977557093815}
   - component: {fileID: 86355977557093812}
   - component: {fileID: 86355977557093813}
-  - component: {fileID: 86355977557093833}
+  - component: {fileID: 8356504581780944294}
   m_Layer: 5
   m_Name: UI_Canvas
   m_TagString: Untagged
@@ -3553,7 +3553,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &86355977557093833
+--- !u!114 &8356504581780944294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3562,7 +3562,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 86355977557093810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8929e75687acf8c4aac2fe57a92fc4f8, type: 3}
+  m_Script: {fileID: 11500000, guid: b0f0400e6da38a34da3e725fff729da7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 86355977222826064}
@@ -3576,15 +3576,15 @@ MonoBehaviour:
   bulletExplosiveRadius: 0
   bulletKnockback: 0
   gunRateOfFire: 0.3
-  gunBulletSpeed: 10
+  gunBulletSpeed: 5
   gunRecoil: 0
-  playerSpeed: 1.2
-  playerMaxHP: 70
-  playerInvincibilityTimer: 0.5
-  enemyHP: 15
+  playerSpeed: 2
+  playerMaxHP: 10
+  playerInvincibilityTimer: 0.3
+  enemyHP: 5
   enemySpeed: 0.5
   enemySize: 1
-  enemyAttack: 10
+  enemyAttack: 2
 --- !u!1 &86355977589224454
 GameObject:
   m_ObjectHideFlags: 0
