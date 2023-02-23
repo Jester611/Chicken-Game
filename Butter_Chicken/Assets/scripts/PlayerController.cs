@@ -25,12 +25,17 @@ public class PlayerController : MonoBehaviour
     private float movementSpeed;
     float invincibilityDuration;
 
+    public static event Action OnPlayerDeath;
+    public event Action OnDamaged;
+    public event Action OnDeath;
+
     private void Awake() {
         if(instance == null){
             instance = this;
         }else{
             Destroy(gameObject);
         }
+        OnDeath += () => {OnPlayerDeath?.Invoke();};
     }
 
     private void Start() {
