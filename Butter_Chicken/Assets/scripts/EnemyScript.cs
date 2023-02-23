@@ -26,13 +26,14 @@ public class EnemyScript : MonoBehaviour, IDamagable
     }
 
     private void Start() {
-        UpdateStats();
-        currentHP = maxHP;
         player = PlayerController.instance;
+        currentHealth = maxHealth;
+        UpdateStats();
     }
 
     public void TakeDamage(float damageTaken){
-        currentHP -= damageTaken;
+        currentHealth -= damageTaken;
+        OnDamaged?.Invoke();
     }
     private void OnEnable() {
         LevelUpScript.OnUpdateStats += UpdateStats;
@@ -54,18 +55,15 @@ public class EnemyScript : MonoBehaviour, IDamagable
 
     private void Die() {
         OnEnemyKilled?.Invoke();
-        OnKilled?.Invoke();
+        OnDeath?.Invoke();
         Destroy(gameObject);
         Debug.Log("enemy died");
     }
 
     private void UpdateStats() {
-        if(UIScript.instance != null){
-            movementSpeed = UIScript.instance.enemySpeed;
-            maxHP = UIScript.instance.enemyHP;
-            attackDamage = UIScript.instance.enemyAttack;
-        }
-        else{Debug.Log("enemy not detecting singleton ffs");}
+        movementSpeed = UIScript.instance.enemySpeed;
+        maxHP = UIScript.instance.enemyHP;
+        attackDamage = UIScript.instance.enemyAttack;
     }
 
     // Aerial: on collision damage is boring as fuck but I'm too shit of a programmer to write anything better

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 9398449c5058c7d42be4d8eab60066c3
+<<<<<<<< HEAD:Butter_Chicken/Assets/scripts/EnemySpawner.cs.meta
+guid: c650b94e495847546b79fd0786a6714b
+========
+guid: 47e56b97547e3484db15cecf0286c3fc
+>>>>>>>> main:Butter_Chicken/Assets/Scripts/Canvas Scripts/healtbarscript.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

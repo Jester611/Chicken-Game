@@ -31,7 +31,6 @@ public class UIScript : MonoBehaviour
     public float gunRateOfFire;
     public float gunBulletSpeed;
     public float gunRecoil;
-
     [Header("Player")]
     public float playerSpeed;
     public float playerMaxHP;
@@ -49,10 +48,6 @@ public class UIScript : MonoBehaviour
     private int playerLevelRequirement = 10;
     private int playerLevel;
 
-    private void Start() {
-        pauseMenu.SetActive(false);
-        settingsMenu.SetActive(false);
-    }
     private void Awake() {
         if(instance == null){
             instance = this;
@@ -61,14 +56,19 @@ public class UIScript : MonoBehaviour
         }
     }
 
+    private void Start() {
+        pauseMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+    }
+
     private void OnEnable() {
         EnemyScript.OnEnemyKilled += GainXP;
-        PlayerController.OnPlayerDeath += DeathScreen;
+        PlayerController.instance.OnDeath += DeathScreen;
     }
 
     private void OnDisable() {
         EnemyScript.OnEnemyKilled -= GainXP;
-        PlayerController.OnPlayerDeath += DeathScreen;
+        PlayerController.instance.OnDeath += DeathScreen;
     }
 
     private void Update() {
@@ -102,7 +102,7 @@ public class UIScript : MonoBehaviour
     }
 
     public void UpdateHealthBar(){
-        healthBar.fillAmount = (PlayerController.instance.currentHP/playerMaxHP);
+        healthBar.fillAmount = (PlayerController.instance.currentHealth/playerMaxHP);
     }
     
     private void GainXP() {
