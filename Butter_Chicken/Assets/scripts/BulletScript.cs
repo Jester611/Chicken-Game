@@ -6,10 +6,10 @@ public class BulletScript : MonoBehaviour
 
     // these values will come from a singleton to handle upgrades
 
-    [SerializeField] private float size;
-    [SerializeField] private float explosionRadius;
-    [SerializeField] private float knockback;
-    [SerializeField] private float damage;
+    private float size;
+    private float explosionRadius;
+    private float knockback;
+    private float damage;
 
     private void Start() {
         Destroy(gameObject, 10f);
@@ -61,13 +61,10 @@ public class BulletScript : MonoBehaviour
         Destroy(gameObject);
     }
     private void GetStats(){
-        if(UIScript.instance != null){
-            size = UIScript.instance.bulletSize;
-            explosionRadius = UIScript.instance.bulletExplosiveRadius;
-            knockback = UIScript.instance.bulletKnockback;
-            damage = UIScript.instance.bulletDamage;
-            transform.localScale = new Vector3(size, size, size);
-        }
-        else{Debug.Log("bullet not detecting singleton ffs, running from default stats instead");}
+        size = GameManager.instance.bulletSize;
+        explosionRadius = GameManager.instance.bulletExplosiveRadius;
+        knockback = GameManager.instance.bulletKnockback;
+        damage = GameManager.instance.bulletDamage;
+        transform.localScale = new Vector3(size, size, size);
     }
 }

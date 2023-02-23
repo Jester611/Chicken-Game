@@ -17,12 +17,12 @@ public class WeaponScript : MonoBehaviour
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
-        Reload();
     }
 
     private void Start() {
         player = PlayerController.instance;
         UpdateStats();
+        Reload();
     }
 
     private void OnEnable() {
@@ -45,7 +45,6 @@ public class WeaponScript : MonoBehaviour
             //TODO: IMPLEMENT BULLET SPREAD
             readyToFire = false;
             Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
-
             // gun recoil
             rb.AddForce(-gunPoint.forward*recoil, ForceMode.Impulse);
 
@@ -58,10 +57,10 @@ public class WeaponScript : MonoBehaviour
     }
 
     private void UpdateStats() {
-        if(UIScript.instance != null){
-            bulletSpeed = UIScript.instance.gunBulletSpeed;
-            reloadTime = UIScript.instance.gunRateOfFire;
-            recoil = UIScript.instance.gunRecoil;
+        if(GameManager.instance != null){
+            bulletSpeed = GameManager.instance.gunBulletSpeed;
+            reloadTime = GameManager.instance.gunRateOfFire;
+            recoil = GameManager.instance.gunRecoil;
         }
         else{Debug.Log("weapon not detecting singleton ffs");}
     }
