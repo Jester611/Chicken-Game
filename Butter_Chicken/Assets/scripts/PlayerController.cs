@@ -7,8 +7,6 @@ public class PlayerController : MonoBehaviour
 {   
     // ## ESSENTIALS ##
     public static PlayerController instance;
-    public static event Action OnPlayerDeath;
-
     [HideInInspector] public Rigidbody rb {get; set;}
 
     Camera cam;
@@ -76,6 +74,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage){
         if (gracePeriod <= 0){
             currentHealth -= damage;
+            OnDamaged?.Invoke();
             if (currentHealth <= 0){
                 PlayerDies();
             }
@@ -98,6 +97,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void PlayerDies(){
+        OnDeath?.Invoke();
         OnPlayerDeath?.Invoke();
     }
 }
