@@ -56,18 +56,19 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
+        Debug.Log("Started.");
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
     }
 
     private void OnEnable() {
         EnemyScript.OnEnemyKilled += GainXP;
-        PlayerController.instance.OnDeath += DeathScreen;
+        PlayerController.OnPlayerDeath += DeathScreen;
     }
 
     private void OnDisable() {
         EnemyScript.OnEnemyKilled -= GainXP;
-        PlayerController.instance.OnDeath += DeathScreen;
+        PlayerController.OnPlayerDeath += DeathScreen;
     }
 
     private void Update() {

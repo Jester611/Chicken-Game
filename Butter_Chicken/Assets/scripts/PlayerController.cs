@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private float movementSpeed;
     float invincibilityDuration;
 
+    public static event Action OnPlayerDeath;
     public event Action OnDamaged;
     public event Action OnDeath;
 
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         }else{
             Destroy(gameObject);
         }
+        OnDeath += () => {OnPlayerDeath?.Invoke();};
     }
 
 
