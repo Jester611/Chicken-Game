@@ -17,12 +17,12 @@ public class WeaponScript : MonoBehaviour
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
-        Reload();
     }
 
     private void Start() {
         player = PlayerController.instance;
         UpdateStats();
+        Reload();
     }
 
     private void OnEnable() {
@@ -44,7 +44,6 @@ public class WeaponScript : MonoBehaviour
             bullet.GetComponent<Rigidbody>().AddForce(gunPoint.forward * bulletSpeed, ForceMode.VelocityChange);
             readyToFire = false;
             Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
-
             // gun recoil
             rb.AddForce(-gunPoint.forward*recoil, ForceMode.Impulse);
 

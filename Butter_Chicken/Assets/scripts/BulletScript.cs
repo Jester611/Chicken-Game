@@ -6,10 +6,10 @@ public class BulletScript : MonoBehaviour
 
     // these values will come from a singleton to handle upgrades
 
-    [SerializeField] private float size;
-    [SerializeField] private float explosionRadius;
-    [SerializeField] private float knockback;
-    [SerializeField] private float damage;
+    private float size;
+    private float explosionRadius;
+    private float knockback;
+    private float damage;
 
     private void Start() {
         Destroy(gameObject, 10f);

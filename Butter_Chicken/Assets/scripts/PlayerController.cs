@@ -1,17 +1,21 @@
+using System;
 using UnityEngine;
 using System;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(WeaponScript))]
 public class PlayerController : MonoBehaviour, IDamagable
 {   
     // ## ESSENTIALS ##
     public static PlayerController instance;
-    public static event Action OnPlayerDeath;
-
-    [HideInInspector] public Rigidbody rb {get; set;}
     Camera cam;
     WeaponScript weapon;
+    [HideInInspector] public Rigidbody rb {get; set;}
     [SerializeField] private LayerMask aimMask;
+
+    public float maxHealth {get; set;}
+    public float currentHealth {get; set;}
+
     private Vector2 moveDirection;
     private Vector2 mousePosition;
     float gracePeriod; // brief invincibility after taking damage
@@ -22,6 +26,17 @@ public class PlayerController : MonoBehaviour, IDamagable
     private float maxHP;
     [HideInInspector] public float currentHP;
     float invincibilityDuration;
+
+    private void Awake() {
+        if(instance == null){
+            instance = this;
+        }else{
+            Destroy(gameObject);
+        }
+    }
+
+    public event Action OnDamaged;
+    public event Action OnDeath;
 
     private void Awake() {
         if(instance == null){
@@ -53,8 +68,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             Ray aimRay = cam.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(aimRay, out hit, Mathf.Infinity, aimMask);
 
-            transform.LookAt(new Vector3(
-            hit.point.x, transform.position.y, hit.point.z));
+            transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
 
             if (Input.GetMouseButton(0)) {
                 weapon.Fire();
@@ -74,6 +88,11 @@ public class PlayerController : MonoBehaviour, IDamagable
             }
             gracePeriod = invincibilityDuration;
             UIScript.instance.UpdateHealthBar();
+        }
+        currentHealth -= damage;
+        OnDamaged?.Invoke();
+        if(currentHealth <= 0){
+            OnDeath?.Invoke();
         }
     }
 

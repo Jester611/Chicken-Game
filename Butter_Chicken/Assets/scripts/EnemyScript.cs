@@ -9,12 +9,17 @@ public class EnemyScript : MonoBehaviour, IDamagable
     [SerializeField] float movementSpeed;
     [SerializeField] float attackDamage;
 
-    private float currentHP;
+    public float maxHealth {get; set;}
+    public float currentHealth {get; set;} 
+
     private float distance;
     Vector3 direction;
 
+
+
     public static event Action OnEnemyKilled;
-    public event Action OnKilled;
+    public event Action OnDeath;
+    public event Action OnDamaged;
 
     private void Awake() {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -26,9 +31,8 @@ public class EnemyScript : MonoBehaviour, IDamagable
         player = PlayerController.instance;
     }
 
-    public void TakeDamage(float damageTaken) {
+    public void TakeDamage(float damageTaken){
         currentHP -= damageTaken;
-        if(currentHP <= 0) Die();
     }
     private void OnEnable() {
         LevelUpScript.OnUpdateStats += UpdateStats;
@@ -41,8 +45,8 @@ public class EnemyScript : MonoBehaviour, IDamagable
         distance = Vector3.Distance(transform.position, player.transform.position);
         direction = player.transform.position - transform.position;
         direction.Normalize();
-
-        rb.AddForce(direction * movementSpeed, ForceMode.Impulse);
+        
+        rb.AddForce(direction*movementSpeed, ForceMode.VelocityChange);
 
         float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
@@ -71,4 +75,5 @@ public class EnemyScript : MonoBehaviour, IDamagable
             player.TakeDamage(attackDamage);
         }
     }
+
 }
