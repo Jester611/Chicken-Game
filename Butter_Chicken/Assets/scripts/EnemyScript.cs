@@ -63,9 +63,9 @@ public class EnemyScript : MonoBehaviour, IDamagable
     }
 
     private void UpdateStats() {
-        movementSpeed = UIScript.instance.enemySpeed;
-        maxHP = UIScript.instance.enemyHP;
-        attackDamage = UIScript.instance.enemyAttack;
+        movementSpeed = GameManager.instance.enemySpeed;
+        maxHP = GameManager.instance.enemyHP;
+        attackDamage = GameManager.instance.enemyAttack;
     }
 
     // Aerial: on collision damage is boring as fuck but I'm too shit of a programmer to write anything better

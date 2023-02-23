@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIScript : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static UIScript instance  { get; private set; }
+    public static GameManager instance  { get; private set; }
     public static event Action OnUpdateStats;
 
     // ## MENUS ##
@@ -15,7 +15,6 @@ public class UIScript : MonoBehaviour
     [SerializeField] GameObject deathScreen;
 
     public static bool isPaused;
-
 
     // ## COUNTERS ##
     [SerializeField] Image healthBar;

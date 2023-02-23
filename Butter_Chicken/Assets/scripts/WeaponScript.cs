@@ -56,10 +56,10 @@ public class WeaponScript : MonoBehaviour
     }
 
     private void UpdateStats() {
-        if(UIScript.instance != null){
-            bulletSpeed = UIScript.instance.gunBulletSpeed;
-            reloadTime = UIScript.instance.gunRateOfFire;
-            recoil = UIScript.instance.gunRecoil;
+        if(GameManager.instance != null){
+            bulletSpeed = GameManager.instance.gunBulletSpeed;
+            reloadTime = GameManager.instance.gunRateOfFire;
+            recoil = GameManager.instance.gunRecoil;
         }
         else{Debug.Log("weapon not detecting singleton ffs");}
     }

@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     }
 
     private void Update() {
-        if (!UIScript.isPaused){
+        if (!GameManager.isPaused){
             if(gracePeriod > 0){
                 gracePeriod -= Time.deltaTime;
             }
@@ -77,19 +77,14 @@ public class PlayerController : MonoBehaviour, IDamagable
                 OnDeath?.Invoke();
             }
             gracePeriod = invincibilityDuration;
-            UIScript.instance.UpdateHealthBar();
+            GameManager.instance.UpdateHealthBar();
         }
     }
 
     private void UpdateStats() {
-        if(UIScript.instance != null){
-            movementSpeed = UIScript.instance.playerSpeed;
-            maxHealth = UIScript.instance.playerMaxHP;
-            invincibilityDuration = UIScript.instance.playerInvincibilityTimer;
-            currentHealth = maxHealth; //full heal on level
-            Debug.Log($"stats updated {currentHealth} HP, {movementSpeed} movementSpeed, {invincibilityDuration} invincibilityTimer");
-            
-        }
-        else{Debug.Log("player not detecting singleton ffs");}
+        movementSpeed = GameManager.instance.playerSpeed;
+        maxHealth = GameManager.instance.playerMaxHP;
+        invincibilityDuration = GameManager.instance.playerInvincibilityTimer;
+        currentHealth = maxHealth; //full heal on level
     }
 }

@@ -61,10 +61,10 @@ public class BulletScript : MonoBehaviour
         Destroy(gameObject);
     }
     private void GetStats(){
-        size = UIScript.instance.bulletSize;
-        explosionRadius = UIScript.instance.bulletExplosiveRadius;
-        knockback = UIScript.instance.bulletKnockback;
-        damage = UIScript.instance.bulletDamage;
+        size = GameManager.instance.bulletSize;
+        explosionRadius = GameManager.instance.bulletExplosiveRadius;
+        knockback = GameManager.instance.bulletKnockback;
+        damage = GameManager.instance.bulletDamage;
         transform.localScale = new Vector3(size, size, size);
     }
 }
