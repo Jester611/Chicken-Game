@@ -42,6 +42,7 @@ public class WeaponScript : MonoBehaviour
             // this didn't look very good in gameplay though
 
             bullet.GetComponent<Rigidbody>().AddForce(gunPoint.forward * bulletSpeed, ForceMode.VelocityChange);
+            //TODO: IMPLEMENT BULLET SPREAD
             readyToFire = false;
             Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
 

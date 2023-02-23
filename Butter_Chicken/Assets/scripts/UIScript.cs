@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIScript : MonoBehaviour
 {
     public static UIScript instance  { get; private set; }
-    public static event Action OnUpdateStats;
+    public static event Action OnLevelUp;
 
     // ## MENUS ##
     [SerializeField] GameObject pauseMenu;
@@ -31,16 +31,21 @@ public class UIScript : MonoBehaviour
     public float gunRateOfFire;
     public float gunBulletSpeed;
     public float gunRecoil;
+    public float gunSpread; //not yet implemented
 
     [Header("Player")]
     public float playerSpeed;
     public float playerMaxHP;
     public float playerInvincibilityTimer;
+    public float playerWeight;
+    public float playerDrag;
+
     [Header("Enemy")]
     public float enemyHP;
     public float enemySpeed;
     public float enemySize;
     public float enemyAttack;
+    public float enemyWeight;
 
     // Player levels
     [Header(header: "Player Levels")]
@@ -121,6 +126,8 @@ public class UIScript : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
         levelUpMenu.SetActive(true);
+        OnLevelUp?.Invoke();
+        playerXP = 0;
     }
 
     public void QuitGame(){
@@ -139,5 +146,6 @@ public class UIScript : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //gonna need a script resetting stats to default values i think
     }
 }

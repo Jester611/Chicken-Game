@@ -82,6 +82,8 @@ public class PlayerController : MonoBehaviour, IDamagable
             movementSpeed = UIScript.instance.playerSpeed;
             maxHP = UIScript.instance.playerMaxHP;
             invincibilityDuration = UIScript.instance.playerInvincibilityTimer;
+            rb.mass = UIScript.instance.playerWeight;
+            rb.drag = UIScript.instance.playerDrag;
             currentHP = maxHP; //full heal on level
             Debug.Log($"stats updated {currentHP} HP, {movementSpeed} movementSpeed, {invincibilityDuration} invincibilityTimer");
             

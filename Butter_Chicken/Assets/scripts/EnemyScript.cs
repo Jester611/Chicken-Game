@@ -60,6 +60,7 @@ public class EnemyScript : MonoBehaviour, IDamagable
             movementSpeed = UIScript.instance.enemySpeed;
             maxHP = UIScript.instance.enemyHP;
             attackDamage = UIScript.instance.enemyAttack;
+            rb.mass = UIScript.instance.enemyWeight;
         }
         else{Debug.Log("enemy not detecting singleton ffs");}
     }
