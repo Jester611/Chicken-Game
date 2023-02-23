@@ -61,13 +61,10 @@ public class BulletScript : MonoBehaviour
         Destroy(gameObject);
     }
     private void GetStats(){
-        if(UIScript.instance != null){
-            size = UIScript.instance.bulletSize;
-            explosionRadius = UIScript.instance.bulletExplosiveRadius;
-            knockback = UIScript.instance.bulletKnockback;
-            damage = UIScript.instance.bulletDamage;
-            transform.localScale = new Vector3(size, size, size);
-        }
-        else{Debug.Log("bullet not detecting singleton ffs, running from default stats instead");}
+        size = UIScript.instance.bulletSize;
+        explosionRadius = UIScript.instance.bulletExplosiveRadius;
+        knockback = UIScript.instance.bulletKnockback;
+        damage = UIScript.instance.bulletDamage;
+        transform.localScale = new Vector3(size, size, size);
     }
 }

@@ -31,9 +31,12 @@ public class EnemyScript : MonoBehaviour, IDamagable
         UpdateStats();
     }
 
-    public void TakeDamage(float damageTaken){
-        currentHealth -= damageTaken;
+    public void TakeDamage(float damage){
+        currentHealth -= damage;
         OnDamaged?.Invoke();
+        if(currentHealth <= 0) {
+            Die();
+        }
     }
     private void OnEnable() {
         LevelUpScript.OnUpdateStats += UpdateStats;
@@ -57,7 +60,6 @@ public class EnemyScript : MonoBehaviour, IDamagable
         OnEnemyKilled?.Invoke();
         OnDeath?.Invoke();
         Destroy(gameObject);
-        Debug.Log("enemy died");
     }
 
     private void UpdateStats() {
