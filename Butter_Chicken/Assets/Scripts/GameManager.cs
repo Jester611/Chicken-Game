@@ -37,16 +37,18 @@ public class GameManager : MonoBehaviour
     public float playerWeight = 1f;
     public float playerDrag = 8f;
     [Header("Enemy")]
-  public float enemyHP = 10f;
+    public float enemyHP = 10f;
     public float enemySpeed = 0.02f;
     public float enemySize = 1f;
     public float enemyAttack = 8f;
     public float enemyWeight = 0.2f;
 
     // ## PLAYER LEVELS ##
-    private int playerXP = 0;
-    private int playerLevelRequirement = 8;
-    private int playerLevel = 1;
+    [Header(header: "Player Level")]
+    [SerializeField] private int playerXP = 0;
+    [SerializeField] private int playerLevelRequirement = 8;
+    private int playerLevel = 1; //meant for level display
+    //could probably have wave number display
 
     private DefaultStats defaultstats;
 
@@ -56,11 +58,14 @@ public class GameManager : MonoBehaviour
         }else{
             Destroy(gameObject);
         }
+
     }
 
     private void Start() {
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
+        UpdateExpBar();
+        UpdateHealthBar();
     }
 
     private void OnEnable() {
@@ -75,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)){
-            if (!isPaused){ // gonna need clause for level up menu when it's done
+            if (!isPaused){
                 PauseGame();
             }
             else if (levelUpMenu.activeSelf == true || deathScreen.activeSelf == true){
@@ -106,17 +111,20 @@ public class GameManager : MonoBehaviour
     public void UpdateHealthBar(){
         healthBar.fillAmount = (PlayerController.instance.currentHealth/playerMaxHP);
     }
+
+    private void UpdateExpBar(){
+        if(playerLevelRequirement > 0){
+            expBar.fillAmount = (((float)playerXP)/playerLevelRequirement);
+        }
+    }
     
     private void GainXP() {
         playerXP++;
         if (playerXP >= playerLevelRequirement)
         {
             LevelUp();
-            Debug.Log("player leveled up");
         }
-        if(playerLevelRequirement > 0){
-            expBar.fillAmount = (((float)playerXP)/playerLevelRequirement);
-        }
+        UpdateExpBar();
     }
 
     private void LevelUp(){

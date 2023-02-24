@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9ec4ffa211e774b929fdb1cd34dff0, type: 3}
-  m_Name: Test1 5
+  m_Name: Lessgrace
   m_EditorClassIdentifier: 
-  upgradeName: test5
-  description: immortality
+  upgradeName: Fall from grace
+  description: Less enemy damage
   add_bulletDamage: 0
   add_bulletExplosiveRadius: 0
   add_bulletKnockback: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
   add_gunSpread: 0
   add_playerSpeed: 0
   add_playerMaxHP: 0
-  add_playerInvincibilityTimer: 100000
+  add_playerInvincibilityTimer: 0
   add_playerWeight: 0
   add_playerDrag: 0
   add_enemyHP: 0
@@ -40,11 +40,11 @@ MonoBehaviour:
   mult_gunSpread: 1
   mult_playerSpeed: 1
   mult_playerMaxHP: 1
-  mult_playerInvincibilityTimer: 1
+  mult_playerInvincibilityTimer: 0.2
   mult_playerWeight: 1
   mult_playerDrag: 1
   mult_enemyHP: 1
   mult_enemySpeed: 1
   mult_enemySize: 1
-  mult_enemyAttack: 1
+  mult_enemyAttack: 0.2
   mult_enemyWeight: 1

@@ -5,10 +5,18 @@ public class EnemyScript : MonoBehaviour, IDamagable
 {
     PlayerController player;
     [HideInInspector] public Rigidbody rb {get; set;}
-    [SerializeField] float movementSpeed;
-    [SerializeField] float attackDamage;
 
+    // in retrospection this would be better handled by a scriptable object
+
+    // ## UPGRADEABLE VARS ##
+    private float movementSpeed;
+    private float attackDamage;
     public float maxHealth {get; set;}
+    private float size;
+    // there's also weight value
+    // GameManager.instance.enemyWeight is controlling rb.mass
+
+    // ## END UPGRADEABLE VARS ##
     public float currentHealth {get; set;} 
 
     private float distance;
@@ -43,11 +51,15 @@ public class EnemyScript : MonoBehaviour, IDamagable
     }
 
     private void FixedUpdate() {
+        if (transform.position.y < -20){
+            Die();
+        }
+
         distance = Vector3.Distance(transform.position, player.transform.position);
         direction = player.transform.position - transform.position;
         direction.Normalize();
         
-        rb.AddForce(direction*movementSpeed, ForceMode.VelocityChange);
+        rb.AddForce(direction*movementSpeed, ForceMode.Impulse);
 
         float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
@@ -63,6 +75,9 @@ public class EnemyScript : MonoBehaviour, IDamagable
         movementSpeed = GameManager.instance.enemySpeed;
         maxHealth = GameManager.instance.enemyHP;
         attackDamage = GameManager.instance.enemyAttack;
+        size = GameManager.instance.enemySize;
+        transform.localScale = new Vector3(size,size,size);
+        rb.mass = GameManager.instance.enemyWeight;
     }
 
     // Aerial: on collision damage is boring as fuck but I'm too shit of a programmer to write anything better

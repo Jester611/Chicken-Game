@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9ec4ffa211e774b929fdb1cd34dff0, type: 3}
-  m_Name: Test1 7
+  m_Name: Featherweight
   m_EditorClassIdentifier: 
-  upgradeName: test7
-  description: enemies 1 hit u
+  upgradeName: Feather Weight
+  description: Fast Movement
   add_bulletDamage: 0
   add_bulletExplosiveRadius: 0
   add_bulletKnockback: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
   add_enemyHP: 0
   add_enemySpeed: 0
   add_enemySize: 0
-  add_enemyAttack: 100
+  add_enemyAttack: 0
   add_enemyWeight: 0
   mult_bulletDamage: 1
   mult_bulletExplosiveRadius: 1
@@ -41,7 +41,7 @@ MonoBehaviour:
   mult_playerSpeed: 1
   mult_playerMaxHP: 1
   mult_playerInvincibilityTimer: 1
-  mult_playerWeight: 1
+  mult_playerWeight: 0.2
   mult_playerDrag: 1
   mult_enemyHP: 1
   mult_enemySpeed: 1

@@ -19,7 +19,7 @@ MonoBehaviour:
   add_bulletKnockback: 5
   add_gunRateOfFire: 0
   add_gunBulletSpeed: 0
-  add_gunRecoil: 20
+  add_gunRecoil: 40
   add_gunSpread: 0
   add_playerSpeed: 0
   add_playerMaxHP: 0

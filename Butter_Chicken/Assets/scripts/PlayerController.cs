@@ -10,9 +10,9 @@ public class PlayerController : MonoBehaviour
     public static event Action OnPlayerDeath;
 
     [HideInInspector] public Rigidbody rb {get; set;}
-
     Camera cam;
     WeaponScript weapon;
+    Animator animator;
     [SerializeField] private LayerMask aimMask;
     private Vector2 moveDirection;
     private Vector2 mousePosition;
@@ -34,10 +34,17 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Start() {
+        animator = GetComponent<Animator>();
         cam = Camera.main;
         rb = GetComponent<Rigidbody>();
         weapon = GetComponent<WeaponScript>();
         UpdateStats();
+    }
+    private void OnEnable() {
+        LevelUpScript.OnUpdateStats += UpdateStats;
+    }
+    private void OnDisable() {
+        LevelUpScript.OnUpdateStats -= UpdateStats;
     }
 
     private void Update() {
@@ -86,6 +93,7 @@ public class PlayerController : MonoBehaviour
             invincibilityDuration = GameManager.instance.playerInvincibilityTimer;
             rb.mass = GameManager.instance.playerWeight;
             rb.drag = GameManager.instance.playerDrag;
+            Debug.Log($"player drag {rb.drag}, manager drag {GameManager.instance.playerDrag}");
             currentHealth = maxHealth; //full heal on level
             Debug.Log($"stats updated {currentHealth} HP, {movementSpeed} movementSpeed, {invincibilityDuration} invincibilityTimer");
         }

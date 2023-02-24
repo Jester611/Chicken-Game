@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9ec4ffa211e774b929fdb1cd34dff0, type: 3}
-  m_Name: Test1 1
+  m_Name: Spraynpray
   m_EditorClassIdentifier: 
-  upgradeName: test upgrade1
-  description: nothing happens
+  upgradeName: Spray and Pray
+  description: Bonus Fire Rate
   add_bulletDamage: 0
   add_bulletExplosiveRadius: 0
   add_bulletKnockback: 0
   add_gunRateOfFire: 0
   add_gunBulletSpeed: 0
   add_gunRecoil: 0
-  add_gunSpread: 0
+  add_gunSpread: 30
   add_playerSpeed: 0
   add_playerMaxHP: 0
   add_playerInvincibilityTimer: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   mult_bulletDamage: 1
   mult_bulletExplosiveRadius: 1
   mult_bulletKnockback: 1
-  mult_gunRateOfFire: 1
+  mult_gunRateOfFire: 0.5
   mult_gunBulletSpeed: 1
   mult_gunRecoil: 1
   mult_gunSpread: 1

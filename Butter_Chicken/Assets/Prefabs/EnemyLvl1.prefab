@@ -5046,7 +5046,7 @@ GameObject:
   - component: {fileID: 5255436397804182624}
   - component: {fileID: 5255436397804182628}
   - component: {fileID: 1645184272}
-  - component: {fileID: 467460991}
+  - component: {fileID: 1061082277606115299}
   m_Layer: 0
   m_Name: EnemyLvl1
   m_TagString: Untagged
@@ -5062,7 +5062,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5255436397804182629}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.49, z: 5.87}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5084,8 +5084,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3e31984c05883440afeec5bfeb8496f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0.2
-  attackDamage: 0
 --- !u!54 &1645184272
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5102,8 +5100,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!135 &467460991
-SphereCollider:
+--- !u!136 &1061082277606115299
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5112,6 +5110,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Height: 5
+  m_Direction: 1
+  m_Center: {x: 0, y: 2, z: 0}

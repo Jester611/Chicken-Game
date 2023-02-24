@@ -6194,10 +6194,12 @@ MonoBehaviour:
   playerWeight: 1
   playerDrag: 8
   enemyHP: 10
-  enemySpeed: 0.2
+  enemySpeed: 0.05
   enemySize: 1
   enemyAttack: 8
   enemyWeight: 0.2
+  playerXP: 0
+  playerLevelRequirement: 8
 --- !u!1 &8623573576586600657
 GameObject:
   m_ObjectHideFlags: 0
@@ -6545,9 +6547,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cfeba44736e47ec438df8d6af2265c65, type: 2}
   - {fileID: 11400000, guid: a830b9247acc14c47909af7d6124e085, type: 2}
   - {fileID: 11400000, guid: 2840431d1cf687247abe2c101651af84, type: 2}
-  - {fileID: 11400000, guid: 4fdbc3325d7b023408ff3a71ffa428a3, type: 2}
-  - {fileID: 11400000, guid: a1b50c29883e12f4696e17af0446f41d, type: 2}
-  - {fileID: 11400000, guid: d68382d2de6bd034cb0f046082c52ba8, type: 2}
   - {fileID: 11400000, guid: cbd983aace2649f4e96dced47dccfb5e, type: 2}
   option1Name: {fileID: 981497238070726288}
   option1Desc: {fileID: 3742454854270130720}

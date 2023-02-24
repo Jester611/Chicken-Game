@@ -9,11 +9,14 @@ public class WeaponScript : MonoBehaviour
     
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform gunPoint;
-    
+
+    bool readyToFire;
+        
+    // ## UPGRADEABLE VARS ##
     private float bulletSpeed;
     private float reloadTime;
     private float recoil;
-    bool readyToFire;
+    private float spread;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -35,20 +38,26 @@ public class WeaponScript : MonoBehaviour
 
     public void Fire() {
         if(readyToFire){
-            GameObject bullet = Instantiate(bulletPrefab, gunPoint.position, gunPoint.rotation);
+            // BULLET SPREAD
+            Quaternion spreadRotation = gunPoint.rotation;
+            if(spread > 0){
+                spreadRotation = gunPoint.rotation*Quaternion.Euler(0,Random.Range(-spread/2, spread/2), 0);
+            }
+            GameObject bullet = Instantiate(bulletPrefab, gunPoint.position, spreadRotation);
 
             // in case we'd want to add player velocity to projectile speed
             // Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
+            // then
+            //bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed + playerVelocity, ForceMode.VelocityChange);
             // this didn't look very good in gameplay though
 
-            //TODO: ADD BULLET SPREAD
-
-            bullet.GetComponent<Rigidbody>().AddForce(gunPoint.forward * bulletSpeed, ForceMode.VelocityChange);
+            // SPAWN BULLET
+            bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed, ForceMode.VelocityChange);
             readyToFire = false;
             Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
-            // gun recoil
+            // GUN RECOIL
             rb.AddForce(-gunPoint.forward*recoil, ForceMode.Impulse);
-            // reload timer
+            // RELOAD TIMER
             Invoke("Reload", reloadTime);
         }
     }
@@ -62,6 +71,7 @@ public class WeaponScript : MonoBehaviour
             bulletSpeed = GameManager.instance.gunBulletSpeed;
             reloadTime = GameManager.instance.gunRateOfFire;
             recoil = GameManager.instance.gunRecoil;
+            spread = GameManager.instance.gunSpread;
         }
         else{Debug.Log("weapon not detecting singleton ffs");}
     }

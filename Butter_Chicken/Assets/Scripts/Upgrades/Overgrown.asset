@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9ec4ffa211e774b929fdb1cd34dff0, type: 3}
-  m_Name: Test1 4
+  m_Name: Overgrown
   m_EditorClassIdentifier: 
-  upgradeName: test upgrade4
-  description: stupid rof
+  upgradeName: Overgrown
+  description: Slower enemies
   add_bulletDamage: 0
   add_bulletExplosiveRadius: 0
   add_bulletKnockback: 0
@@ -34,7 +34,7 @@ MonoBehaviour:
   mult_bulletDamage: 1
   mult_bulletExplosiveRadius: 1
   mult_bulletKnockback: 1
-  mult_gunRateOfFire: 0.01
+  mult_gunRateOfFire: 1
   mult_gunBulletSpeed: 1
   mult_gunRecoil: 1
   mult_gunSpread: 1
@@ -45,6 +45,6 @@ MonoBehaviour:
   mult_playerDrag: 1
   mult_enemyHP: 1
   mult_enemySpeed: 1
-  mult_enemySize: 1
+  mult_enemySize: 3
   mult_enemyAttack: 1
-  mult_enemyWeight: 1
+  mult_enemyWeight: 2
