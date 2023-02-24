@@ -34,11 +34,13 @@ public class EnemyScript : MonoBehaviour, IDamagable
 
     private void Start() {
         player = PlayerController.instance;
-        currentHealth = maxHealth;
         UpdateStats();
+        currentHealth = maxHealth;
+
     }
 
     public void TakeDamage(float damage){
+        Debug.Log($"current hp {currentHealth}, max {maxHealth} gonna take {damage} damage");
         currentHealth -= damage;
         OnDamaged?.Invoke();
         if(currentHealth <= 0) {

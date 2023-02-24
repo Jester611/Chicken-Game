@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9ec4ffa211e774b929fdb1cd34dff0, type: 3}
-  m_Name: TheCannon
+  m_Name: GreasedLightning
   m_EditorClassIdentifier: 
-  upgradeName: The Cannon
-  description: Greatly increased firepower
-  secondDescription: Greatly increased recoil!
-  add_bulletDamage: 20
-  add_bulletExplosiveRadius: 7
-  add_bulletKnockback: 5
-  add_gunRateOfFire: 1
-  add_gunBulletSpeed: 20
-  add_gunRecoil: 30
+  upgradeName: Greased Lightning
+  description: You move much faster.
+  secondDescription: So slippery!
+  add_bulletDamage: 5
+  add_bulletExplosiveRadius: 0
+  add_bulletKnockback: 0
+  add_gunRateOfFire: 0.7
+  add_gunBulletSpeed: 15
+  add_gunRecoil: 0
   add_gunSpread: 0
   add_playerSpeed: 1
   add_playerMaxHP: 50

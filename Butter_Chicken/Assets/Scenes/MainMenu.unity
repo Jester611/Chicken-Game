@@ -2074,10 +2074,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7537655383178559211, guid: 4619d26dbf87b114e8058a095933a69a, type: 3}
-      propertyPath: audioMixer
-      value: 
-      objectReference: {fileID: 24100000, guid: 46718dc33a8e8164780462f5f454bc8f, type: 2}
     - target: {fileID: 7537655383226601320, guid: 4619d26dbf87b114e8058a095933a69a, type: 3}
       propertyPath: m_Name
       value: MainMenu_Canvas
@@ -2214,9 +2210,9 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7537655384759911101, guid: 4619d26dbf87b114e8058a095933a69a, type: 3}
-      propertyPath: m_text
-      value: DR. OOSTER AND THE INFINITE BUTTER CRISIS
+    - target: {fileID: 7537655384169534983, guid: 4619d26dbf87b114e8058a095933a69a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7537655384809526752, guid: 4619d26dbf87b114e8058a095933a69a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2240,6 +2236,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7537655384809526752, guid: 4619d26dbf87b114e8058a095933a69a, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7537655385021522440, guid: 4619d26dbf87b114e8058a095933a69a, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7537655385193417699, guid: 4619d26dbf87b114e8058a095933a69a, type: 3}

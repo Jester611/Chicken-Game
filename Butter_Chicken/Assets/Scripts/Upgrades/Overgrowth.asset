@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9ec4ffa211e774b929fdb1cd34dff0, type: 3}
-  m_Name: TheCannon
+  m_Name: Overgrowth
   m_EditorClassIdentifier: 
-  upgradeName: The Cannon
-  description: Greatly increased firepower
-  secondDescription: Greatly increased recoil!
-  add_bulletDamage: 20
-  add_bulletExplosiveRadius: 7
-  add_bulletKnockback: 5
-  add_gunRateOfFire: 1
-  add_gunBulletSpeed: 20
-  add_gunRecoil: 30
+  upgradeName: Butter overgrowth
+  description: Much slower enemies
+  secondDescription: They're much larger too!
+  add_bulletDamage: 5
+  add_bulletExplosiveRadius: 0
+  add_bulletKnockback: 0
+  add_gunRateOfFire: 0.7
+  add_gunBulletSpeed: 15
+  add_gunRecoil: 0
   add_gunSpread: 0
   add_playerSpeed: 1
   add_playerMaxHP: 50
@@ -28,7 +28,7 @@ MonoBehaviour:
   add_playerWeight: 1
   add_playerDrag: 8
   add_enemyHP: 10
-  add_enemySpeed: 0.05
-  add_enemySize: 1
+  add_enemySpeed: 0.07
+  add_enemySize: 3
   add_enemyAttack: 8
-  add_enemyWeight: 0.2
+  add_enemyWeight: 0.5

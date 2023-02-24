@@ -28,7 +28,7 @@ public class Upgrade : ScriptableObject
 
     [Header("Enemy")]
     public float add_enemyHP = 10f;
-    public float add_enemySpeed = 0.02f;
+    public float add_enemySpeed = 0.05f;
     public float add_enemySize = 1f;
     public float add_enemyAttack = 8f;
     public float add_enemyWeight = 0.2f;

@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class WeaponScript : MonoBehaviour
 {
     PlayerController player;
     Rigidbody rb;
-    
+    AudioSource sound;
+    [SerializeField] AudioClip gunshotSound;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform gunPoint;
 
@@ -20,6 +20,7 @@ public class WeaponScript : MonoBehaviour
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
+        sound = GetComponent<AudioSource>();
     }
 
     private void Start() {
@@ -58,6 +59,7 @@ public class WeaponScript : MonoBehaviour
             // GUN RECOIL
             rb.AddForce(-gunPoint.forward*recoil, ForceMode.Impulse);
             // RELOAD TIMER
+            sound.PlayOneShot(gunshotSound);
             Invoke("Reload", reloadTime);
         }
     }

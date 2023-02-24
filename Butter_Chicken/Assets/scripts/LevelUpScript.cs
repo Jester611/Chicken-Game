@@ -16,6 +16,7 @@ public class LevelUpScript : MonoBehaviour
     private Upgrade option3;
 
     // NAMES AND DESCRIPTIONS OF RANDOMIZED UPGRADES
+    [SerializeField] GameObject upgradesHolder;
     [SerializeField] TextMeshProUGUI option1Name;
     [SerializeField] TextMeshProUGUI option1Desc;
 
@@ -24,6 +25,13 @@ public class LevelUpScript : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI option3Name;
     [SerializeField] TextMeshProUGUI option3Desc;
+
+    // SELECTED UPGRADE DETAILS
+    [SerializeField] GameObject selectedUpgradeHolder;
+    [SerializeField] TextMeshProUGUI upgradeName;
+    [SerializeField] TextMeshProUGUI upgradeDesc;
+    [SerializeField] TextMeshProUGUI upgradeDesc2;
+
 
     private void OnEnable() {
         GameManager.OnLevelUp += RandomizeUpgrades;
@@ -62,39 +70,49 @@ public class LevelUpScript : MonoBehaviour
 
         option3Name.text = option3.upgradeName;
         option3Desc.text = option3.description;
+
+        upgradesHolder.SetActive(true);
     }
 
     public void UpgradeOption1(){
         if(option1 != null){
             option1.Apply();
+            ApplyUpgrade(option1);
         }
         else{Debug.Log("upgrade returned null what the fuck");}
-        UpgradeComplete();
 
     }
     public void UpgradeOption2(){
         if(option2 != null){
             option2.Apply();
+            ApplyUpgrade(option2);
         }
         else{Debug.Log("upgrade returned null what the fuck");}
-        UpgradeComplete();
 
     }
     public void UpgradeOption3(){
         if(option3 != null){
             option3.Apply();
+            ApplyUpgrade(option3);
         }
         else{Debug.Log("upgrade returned null what the fuck");}
-        UpgradeComplete();
     }
 
+    private void ApplyUpgrade(Upgrade upgrade){
+    upgradesHolder.SetActive(false);
+    OnUpdateStats?.Invoke();
+    upgradeName.text = upgrade.upgradeName;
+    upgradeDesc.text = upgrade.description;
+    upgradeDesc2.text = upgrade.secondDescription;
+    selectedUpgradeHolder.SetActive(true);
+    }
     // holy shit if it works at first attempt imma touch myself tonight
     // for the record it did not work at first attempt - A3
-    private void UpgradeComplete(){
+    public void UpgradeComplete(){
         GameManager.isPaused = false;
         Time.timeScale = 1f;
-        OnUpdateStats?.Invoke();
         Debug.Log("UPGRADE COMPLETE");
+        selectedUpgradeHolder.SetActive(false);
         gameObject.SetActive(false);
     }
 }
