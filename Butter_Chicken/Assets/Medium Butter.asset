@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1dc59910298bb44589c1e40113b465c, type: 3}
   m_Name: Medium Butter
   m_EditorClassIdentifier: 
-  type: {fileID: 0}
+  type: {fileID: 5255436397804182628, guid: 184396274b4e2b04cb9e60632ec368f9, type: 3}
   spawnRate: 1
   totalCount: 16
   maxCount: 4

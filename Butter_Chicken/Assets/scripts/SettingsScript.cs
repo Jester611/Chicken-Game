@@ -7,6 +7,7 @@ public class SettingsScript : MonoBehaviour
     [SerializeField] Slider sfxVolumeSlider;
     [SerializeField] Slider musicVolumeSlider;
 
+    [SerializeField] AudioMixer audioMixer;
     [SerializeField] AudioMixerGroup sfxVolume;
     [SerializeField] AudioMixerGroup musicVolume;
 
@@ -20,13 +21,14 @@ public class SettingsScript : MonoBehaviour
     public void SetSFXVolume(float value){
         PlayerPrefs.SetFloat("sfxvolume", value);
         sfxVolumeText.text = ((int)(value*100)).ToString();
-        sfxVolume.audioMixer.SetFloat("Volume", Mathf.Log10(value)*20);
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(value)*20);
     }
 
     public void SetMusicVolume(float value){
         PlayerPrefs.SetFloat("musicvolume", value);
         musicVolumeText.text = ((int)(value*100)).ToString();
-        musicVolume.audioMixer.SetFloat("volume", Mathf.Log10(value)*20);
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(value)*20);
+
     }
 
     private void SetSliders(){

@@ -28,7 +28,7 @@ MonoBehaviour:
   add_playerDrag: 0
   add_enemyHP: 0
   add_enemySpeed: 0
-  add_enemySize: 0
+  add_enemySize: 1
   add_enemyAttack: 0
   add_enemyWeight: 0
   mult_bulletDamage: 1
@@ -44,7 +44,7 @@ MonoBehaviour:
   mult_playerWeight: 1
   mult_playerDrag: 1
   mult_enemyHP: 1
-  mult_enemySpeed: 1
-  mult_enemySize: 3
+  mult_enemySpeed: 1.2
+  mult_enemySize: 1
   mult_enemyAttack: 1
   mult_enemyWeight: 2

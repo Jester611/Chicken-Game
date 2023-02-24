@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Label text="CHICKEN" display-tooltip-when-elided="true" name="title" style="left: 40%; color: rgb(255, 255, 255); font-size: 40px; -unity-font-style: bold;" />
+    <ui:Button text="PLAY" display-tooltip-when-elided="true" name="play" style="color: rgb(255, 255, 255); font-size: 35px; -unity-font-style: bold; background-color: rgb(0, 0, 0); margin-bottom: 20px; margin-top: 100px; width: 30%; align-items: center; transform-origin: center; right: 0; left: 33%;" />
+    <ui:Button text="OPTIONS" display-tooltip-when-elided="true" name="options" style="color: rgb(255, 255, 255); font-size: 35px; -unity-font-style: bold; background-color: rgb(0, 0, 0); margin-bottom: 20px; width: 30%; -unity-text-align: middle-center; white-space: nowrap; align-items: center; left: 33%;" />
+    <ui:Button text="EXIT" display-tooltip-when-elided="true" name="exit" style="font-size: 35px; -unity-font-style: bold; color: rgb(255, 255, 255); background-color: rgb(0, 0, 0); margin-bottom: 5px; width: 30%; align-items: center; left: 33%;" />
+</ui:UXML>

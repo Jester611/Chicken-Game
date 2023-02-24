@@ -19,6 +19,8 @@ public class EnemyScript : MonoBehaviour, IDamagable
     // ## END UPGRADEABLE VARS ##
     public float currentHealth {get; set;} 
 
+    public int enemyLevel;
+
     private float distance;
     Vector3 direction;
 
