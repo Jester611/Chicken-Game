@@ -7,8 +7,6 @@ public class PlayerController : MonoBehaviour
 {   
     // ## ESSENTIALS ##
     public static PlayerController instance;
-    public static event Action OnPlayerDeath;
-
     [HideInInspector] public Rigidbody rb {get; set;}
     Camera cam;
     WeaponScript weapon;
@@ -25,12 +23,17 @@ public class PlayerController : MonoBehaviour
     private float movementSpeed;
     float invincibilityDuration;
 
+    public static event Action OnPlayerDeath;
+    public event Action OnDamaged;
+    public event Action OnDeath;
+
     private void Awake() {
         if(instance == null){
             instance = this;
         }else{
             Destroy(gameObject);
         }
+        OnDeath += () => {OnPlayerDeath?.Invoke();};
     }
 
     private void Start() {
@@ -78,6 +81,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage){
         if (gracePeriod <= 0){
             currentHealth -= damage;
+            OnDamaged?.Invoke();
             if (currentHealth <= 0){
                 PlayerDies();
             }
@@ -101,6 +105,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void PlayerDies(){
+        OnDeath?.Invoke();
         OnPlayerDeath?.Invoke();
     }
 }
