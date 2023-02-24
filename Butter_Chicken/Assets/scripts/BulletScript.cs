@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
+    [SerializeField] GameObject explosionPrefab;
+
     // ## VARS ##
-
-    // these values will come from a singleton to handle upgrades
-
     private float explosionRadius;
     private float knockback;
     private float damage;
@@ -56,6 +55,9 @@ public class BulletScript : MonoBehaviour
                     );
                 }
             }
+            GameObject explosionFX = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            explosionFX.transform.localScale = new Vector3(explosionRadius, explosionRadius, explosionRadius);
+            Destroy(explosionFX, 1f);
         }
         Destroy(gameObject);
     }

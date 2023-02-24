@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 9024733137365793483}
   - component: {fileID: 2041015253280527589}
   - component: {fileID: 4365961608800672820}
+  - component: {fileID: 778389822}
   m_Layer: 7
   m_Name: PlayerObject
   m_TagString: Player
@@ -396,8 +397,6 @@ MonoBehaviour:
   aimMask:
     serializedVersion: 2
     m_Bits: 64
-  movementSpeed: 2
-  maxHP: 100
 --- !u!114 &4365961608800672820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +411,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 8128116052142201782, guid: 03ef6f3fc27ec7b4f977a18397bd3047, type: 3}
   gunPoint: {fileID: 6926536914989624904}
+--- !u!95 &778389822
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5350594099087066063}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7f135d5f938da8d4ca404222c4cd205c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6138554503172630142
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: Overgrown
   description: Slower enemies
+  secondDescription: 
   add_bulletDamage: 0
   add_bulletExplosiveRadius: 0
   add_bulletKnockback: 0
@@ -28,7 +29,7 @@ MonoBehaviour:
   add_playerDrag: 0
   add_enemyHP: 0
   add_enemySpeed: 0
-  add_enemySize: 1
+  add_enemySize: 1.4
   add_enemyAttack: 0
   add_enemyWeight: 0
   mult_bulletDamage: 1
@@ -43,8 +44,8 @@ MonoBehaviour:
   mult_playerInvincibilityTimer: 1
   mult_playerWeight: 1
   mult_playerDrag: 1
-  mult_enemyHP: 1
+  mult_enemyHP: 2
   mult_enemySpeed: 1.2
   mult_enemySize: 1
   mult_enemyAttack: 1
-  mult_enemyWeight: 2
+  mult_enemyWeight: 1.5

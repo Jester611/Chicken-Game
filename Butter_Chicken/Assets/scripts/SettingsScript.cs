@@ -8,9 +8,7 @@ public class SettingsScript : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
 
     [SerializeField] AudioMixer audioMixer;
-    [SerializeField] AudioMixerGroup sfxVolume;
-    [SerializeField] AudioMixerGroup musicVolume;
-
+    
     [SerializeField] TextMeshProUGUI sfxVolumeText;
     [SerializeField] TextMeshProUGUI musicVolumeText;
 

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: Miniature
   description: Weak and small butter!
+  secondDescription: 
   add_bulletDamage: 0
   add_bulletExplosiveRadius: 0
   add_bulletKnockback: 0
@@ -43,8 +44,8 @@ MonoBehaviour:
   mult_playerInvincibilityTimer: 1
   mult_playerWeight: 1
   mult_playerDrag: 1
-  mult_enemyHP: 0.2
+  mult_enemyHP: 0.8
   mult_enemySpeed: 1
-  mult_enemySize: 0.2
-  mult_enemyAttack: 0.4
-  mult_enemyWeight: 0.2
+  mult_enemySize: 0.8
+  mult_enemyAttack: 0.8
+  mult_enemyWeight: 0.8

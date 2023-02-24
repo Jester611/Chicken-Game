@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     // ## COUNTERS ##
     [SerializeField] Image healthBar;
     [SerializeField] Image expBar;
+    [SerializeField] TextMeshProUGUI killCounter;
 
     // ## VARIABLES RELATED TO UPGRADES ##
     [Header("Bullet")]
@@ -49,8 +51,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int playerLevelRequirement = 8;
     private int playerLevel = 1; //meant for level display
     //could probably have wave number display
-
-    private DefaultStats defaultstats;
+    private int killNumber = 0;
+    private int killObjective = 30;
 
     private void Awake() {
         if(instance == null){
@@ -65,7 +67,6 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
         UpdateExpBar();
-        UpdateHealthBar();
     }
 
     private void OnEnable() {
@@ -125,6 +126,7 @@ public class GameManager : MonoBehaviour
             LevelUp();
         }
         UpdateExpBar();
+        AddKillCount();
     }
 
     private void LevelUp(){
@@ -136,11 +138,20 @@ public class GameManager : MonoBehaviour
         playerXP = 0;
     }
 
-    public void QuitGame(){
-        // quit to main menu
-        // scene name once it's done
+    private void AddKillCount(){
+        killNumber ++;
+        killCounter.text = killNumber.ToString();
+        ObjectiveCheck();
+    }
 
-        //SceneManager.LoadScene("MainMenu");
+    private void ObjectiveCheck(){
+        if(killNumber >= killObjective){
+            //things happen if kill objective is reached
+        }
+    }
+
+    public void QuitGame(){
+        SceneManager.LoadScene("MainMenu");
     }
     
     private void DeathScreen(){

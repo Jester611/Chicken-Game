@@ -8,9 +8,9 @@ public class PlayerController : MonoBehaviour
     // ## ESSENTIALS ##
     public static PlayerController instance;
     [HideInInspector] public Rigidbody rb {get; set;}
-    Camera cam;
-    WeaponScript weapon;
-    Animator animator;
+    private Camera cam;
+    private WeaponScript weapon;
+    private Animator animator;
     [SerializeField] private LayerMask aimMask;
     private Vector2 moveDirection;
     private Vector2 mousePosition;
@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour
             }
             gracePeriod = invincibilityDuration;
             GameManager.instance.UpdateHealthBar();
+            animator.Play("PlayerDamaged");
         }
     }
 

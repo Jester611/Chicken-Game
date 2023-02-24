@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: The Cannon
   description: With great firepower comes great recoil.
+  secondDescription: 
   add_bulletDamage: 10
-  add_bulletExplosiveRadius: 5
+  add_bulletExplosiveRadius: 2
   add_bulletKnockback: 5
   add_gunRateOfFire: 0
   add_gunBulletSpeed: 0
-  add_gunRecoil: 40
+  add_gunRecoil: 20
   add_gunSpread: 0
   add_playerSpeed: 0
   add_playerMaxHP: 0
