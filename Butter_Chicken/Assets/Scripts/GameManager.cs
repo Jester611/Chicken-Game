@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject levelUpMenu;
     [SerializeField] GameObject deathScreen;
+    [SerializeField] Image blackoutPanel;
+    [SerializeField] GameObject winScreen;
 
     public static bool isPaused;
 
@@ -21,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image healthBar;
     [SerializeField] Image expBar;
     [SerializeField] TextMeshProUGUI killCounter;
+    int killCount = 0;
 
     // ## VARIABLES RELATED TO UPGRADES ##
     [Header("Bullet")]
@@ -32,6 +36,7 @@ public class GameManager : MonoBehaviour
     public float gunBulletSpeed = 15f;
     public float gunRecoil = 0f;
     public float gunSpread = 0f;
+    public int gunBurstSize = 1;
     [Header("Player")]
     public float playerSpeed = 1f;
     public float playerMaxHP = 50f;
@@ -45,14 +50,15 @@ public class GameManager : MonoBehaviour
     public float enemyAttack = 8f;
     public float enemyWeight = 0.2f;
 
-    // ## PLAYER LEVELS ##
-    [Header(header: "Player Level")]
+    // ## ##
+    [Header("Boss")]
+    [SerializeField] private GameObject uiBossHPHolder;
+    [SerializeField] private Image bossHealthBar;
+
+    // ## ##
+    [Header("Player Level")]
     [SerializeField] private int playerXP = 0;
-    [SerializeField] private int playerLevelRequirement = 8;
-    private int playerLevel = 1; //meant for level display
-    //could probably have wave number display
-    private int killNumber = 0;
-    private int killObjective = 30;
+    [SerializeField] private int playerLevelRequirement = 3;
 
     private void Awake() {
         if(instance == null){
@@ -60,23 +66,25 @@ public class GameManager : MonoBehaviour
         }else{
             Destroy(gameObject);
         }
-
     }
 
     private void Start() {
-        pauseMenu.SetActive(false);
-        settingsMenu.SetActive(false);
         UpdateExpBar();
+        ResumeGame();
     }
 
     private void OnEnable() {
         EnemyScript.OnGainXP += GainXP;
         PlayerController.OnPlayerDeath += DeathScreen;
+        RoomTransition.OnBeginBossFight += BeginBossfight;
+        BossScript.OnBossKill += BossFightWin;
     }
 
     private void OnDisable() {
         EnemyScript.OnGainXP -= GainXP;
-        PlayerController.OnPlayerDeath += DeathScreen;
+        PlayerController.OnPlayerDeath -= DeathScreen;
+        RoomTransition.OnBeginBossFight -= BeginBossfight;
+        BossScript.OnBossKill -= BossFightWin;
     }
 
     private void Update() {
@@ -89,79 +97,131 @@ public class GameManager : MonoBehaviour
             }
             else{
                 ResumeGame();
+                
             }
         }
     }
 
-    private void PauseGame(){
-        isPaused = true;
-        pauseMenu.SetActive(true);
-        Time.timeScale = 0f;
-        //Cursor.visible = true;
-        // are we gonna replace cursor with crosshair?
-    }
+    //## PAUSING ##
 
+    private void PauseGame(){
+        pauseMenu.SetActive(true);
+        MenuMode();
+    }
     public void ResumeGame(){
-        isPaused = false;
         pauseMenu.SetActive(false);
         settingsMenu.SetActive(false);
-        Time.timeScale = 1f;
-        //Cursor.visible = false;
+        GameplayMode();
     }
-
+    public void MenuMode(){
+        isPaused = true;
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    public void GameplayMode(){
+        isPaused = false;
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+    }
     public void UpdateHealthBar(){
         healthBar.fillAmount = (PlayerController.instance.currentHealth/playerMaxHP);
     }
+
+    //## XP ##
 
     private void UpdateExpBar(){
         if(playerLevelRequirement > 0){
             expBar.fillAmount = (((float)playerXP)/playerLevelRequirement);
         }
     }
-    
-    private void GainXP() {
-        playerXP++;
+    private void GainXP(int value) {
+        playerXP += value;
         if (playerXP >= playerLevelRequirement)
         {
             LevelUp();
         }
         UpdateExpBar();
-        AddKillCount();
+        killCount++;
+        killCounter.text = (killCount.ToString());
     }
-
     private void LevelUp(){
-        isPaused = true;
-        Time.timeScale = 0f;
+        MenuMode();
         levelUpMenu.SetActive(true);
         OnLevelUp?.Invoke();
-        playerLevel ++;
+        if (playerLevelRequirement <= 6){
+            playerLevelRequirement +=3;
+        }
+        else if (playerLevelRequirement <= 10){
+            playerLevelRequirement +=2;
+        }
+        else if (playerLevelRequirement <= 20){
+            playerLevelRequirement +=1;
+        }
         playerXP = 0;
     }
 
-    private void AddKillCount(){
-        killNumber ++;
-        killCounter.text = killNumber.ToString();
-        ObjectiveCheck();
-    }
-
-    private void ObjectiveCheck(){
-        if(killNumber >= killObjective){
-            //things happen if kill objective is reached
-        }
-    }
+    //## DYING ##
 
     public void QuitGame(){
         SceneManager.LoadScene("MainMenu");
     }
-    
     private void DeathScreen(){
-        isPaused = true; // prevents player movement
+        MenuMode();
         deathScreen.SetActive(true);
     }
-
     public void RestartScene(){
-        isPaused = false;
-        Time.timeScale = 1f;
+        GameplayMode();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    //## BOSS FIGHT ##
+
+    public void BeginBossfight(){
+        uiBossHPHolder.SetActive(true);
+    }
+    public void UpdateBossHealthBar(){
+        bossHealthBar.fillAmount = BossScript.instance.currentHealth / BossScript.instance.maxHealth;
+    }
+    private void BossFightWin(){
+        StartCoroutine(EndGameScreen());
+    }
+    private IEnumerator EndGameScreen(){
+        yield return KillAllEnemies();
+        yield return new WaitForSeconds(3f);
+        yield return KillAllEnemies();  //in case boss dies while spawning a wave
+        yield return YellowScreen();
+        isPaused = true;                //disable movement for a sec
+        BossTransition();
+        yield return new WaitForSeconds(1f);
+        blackoutPanel.gameObject.SetActive(false);
+        isPaused = false;                //re enable for a sec
+        yield return new WaitForSeconds(1f);
+        winScreen.SetActive(true); // boom gg
+        MenuMode(); 
+    }
+
+    private IEnumerator KillAllEnemies(){
+        EnemyScript[] enemies = FindObjectsOfType<EnemyScript>();
+        foreach(EnemyScript i in enemies){
+            i.Die();
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private IEnumerator YellowScreen(){
+        Color objectColor = blackoutPanel.color;
+        float fadeAmount;
+        while (blackoutPanel.color.a < 1){
+            fadeAmount = objectColor.a + (0.6f * Time.deltaTime);
+            objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+            blackoutPanel.color = objectColor;
+            yield return null;
+        }
+    }
+    private void BossTransition(){
+        uiBossHPHolder.SetActive(false);
+        Destroy(BossScript.instance.gameObject);
     }
 }

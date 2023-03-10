@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveDirection;
     private Vector2 mousePosition;
     float gracePeriod; // brief invincibility after taking damage
-
+    public Vector3 lookPoint;
 
     // ## PLAYER STATS ##
     public float maxHealth {get; set;}
@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
 
     public static event Action OnPlayerDeath;
     public event Action OnDamaged;
-    public event Action OnDeath;
 
     private void Awake() {
         if(instance == null){
@@ -33,7 +32,6 @@ public class PlayerController : MonoBehaviour
         }else{
             Destroy(gameObject);
         }
-        OnDeath += () => {OnPlayerDeath?.Invoke();};
     }
 
     private void Start() {
@@ -63,10 +61,10 @@ public class PlayerController : MonoBehaviour
 
             RaycastHit hit;
             Ray aimRay = cam.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(aimRay, out hit, Mathf.Infinity, aimMask);
-
-            transform.LookAt(new Vector3(
-            hit.point.x, transform.position.y, hit.point.z));
+            Physics.SphereCast(aimRay,0.61f, out hit, Mathf.Infinity, aimMask);
+            lookPoint = new Vector3(
+            hit.point.x, transform.position.y, hit.point.z);
+            transform.LookAt(lookPoint);
 
             if (Input.GetMouseButton(0)) {
                 weapon.Fire();
@@ -75,7 +73,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        rb.AddForce(new Vector3(moveDirection.x * movementSpeed, 0f, moveDirection.y * movementSpeed), ForceMode.VelocityChange);
+        rb.AddForce(new Vector3(moveDirection.x * movementSpeed, 0f, moveDirection.y * movementSpeed), ForceMode.Impulse);
     }
 
     public void TakeDamage(float damage){
@@ -98,15 +96,12 @@ public class PlayerController : MonoBehaviour
             invincibilityDuration = GameManager.instance.playerInvincibilityTimer;
             rb.mass = GameManager.instance.playerWeight;
             rb.drag = GameManager.instance.playerDrag;
-            Debug.Log($"player drag {rb.drag}, manager drag {GameManager.instance.playerDrag}");
             currentHealth = maxHealth; //full heal on level
-            Debug.Log($"stats updated {currentHealth} HP, {movementSpeed} movementSpeed, {invincibilityDuration} invincibilityTimer");
         }
         else{Debug.Log("player not detecting singleton ffs");}
     }
 
     private void PlayerDies(){
-        OnDeath?.Invoke();
         OnPlayerDeath?.Invoke();
     }
 }

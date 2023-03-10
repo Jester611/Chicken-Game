@@ -14,8 +14,10 @@ public class SettingsScript : MonoBehaviour
 
 
     private void Awake() {
-        SetSliders();
+        SetFromPrefs();
+        //SetSliders();
     }
+
     public void SetSFXVolume(float value){
         PlayerPrefs.SetFloat("sfxvolume", value);
         sfxVolumeText.text = ((int)(value*100)).ToString();
@@ -26,6 +28,12 @@ public class SettingsScript : MonoBehaviour
         PlayerPrefs.SetFloat("musicvolume", value);
         musicVolumeText.text = ((int)(value*100)).ToString();
         audioMixer.SetFloat("MusicVolume", Mathf.Log10(value)*20);
+
+    }
+
+    private void SetFromPrefs(){
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(PlayerPrefs.GetFloat("musicvolume")*20));
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(PlayerPrefs.GetFloat("sfxvolume"))*20);
 
     }
 

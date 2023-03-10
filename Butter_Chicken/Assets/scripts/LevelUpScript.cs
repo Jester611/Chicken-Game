@@ -1,36 +1,40 @@
 using System;
 using TMPro;
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.UI;
+
 
 public class LevelUpScript : MonoBehaviour
 {
     public static event Action OnUpdateStats;
 
     // LIST OF UPGRADES NEEDS TO BE MANUALLY SPECIFIED FROM UPGRADE SCRIPTABLE OBJECTS
-    [SerializeField] List<Upgrade> upgrades;
+    [SerializeField] Upgrade[] upgrades;
     
-    // RANDOMLY CHOSEN UPGRADES
-    private Upgrade option1;
-    private Upgrade option2;
-    private Upgrade option3;
+    // RANDOMLY CHOSEN UPGRADES ARRAY
+    private Upgrade[] option = new Upgrade [3];
 
-    // NAMES AND DESCRIPTIONS OF RANDOMIZED UPGRADES
     [SerializeField] GameObject upgradesHolder;
-    [SerializeField] TextMeshProUGUI option1Name;
-    [SerializeField] TextMeshProUGUI option1Desc;
 
-    [SerializeField] TextMeshProUGUI option2Name;
-    [SerializeField] TextMeshProUGUI option2Desc;
+    // CHOOSE UPGRADE MENU ARRAYS
 
-    [SerializeField] TextMeshProUGUI option3Name;
-    [SerializeField] TextMeshProUGUI option3Desc;
+        //at this point it'd be better to use a hashtable for each value, variable and reference assigned to an upgrade but whetever, i can't be assed - A3
+
+    [SerializeField] TextMeshProUGUI[] optionName = new TextMeshProUGUI[3];
+    [SerializeField] TextMeshProUGUI[] optionDesc = new TextMeshProUGUI[3];
+    [SerializeField] TextMeshProUGUI[] optionType = new TextMeshProUGUI[3];
+    [SerializeField] Image[] optionFrame = new Image[3];
 
     // SELECTED UPGRADE DETAILS
     [SerializeField] GameObject selectedUpgradeHolder;
     [SerializeField] TextMeshProUGUI upgradeName;
     [SerializeField] TextMeshProUGUI upgradeDesc;
     [SerializeField] TextMeshProUGUI upgradeDesc2;
+
+    // SEPARATE COLORS FOR UPGRADE TYPES
+    [SerializeField] Color color_weapon = UnityEngine.Color.red;
+    [SerializeField] Color color_player = UnityEngine.Color.cyan;
+    [SerializeField] Color color_enemy = UnityEngine.Color.green;
 
 
     private void OnEnable() {
@@ -41,9 +45,13 @@ public class LevelUpScript : MonoBehaviour
         GameManager.OnLevelUp -= RandomizeUpgrades;
     }
 
+    private void Start() {
+        upgrades = Resources.LoadAll<Upgrade>("Upgrades");
+    }
+
     private void RandomizeUpgrades() {
         // i hate how it looks
-        int upgradesIndex = upgrades.Count;
+        int upgradesIndex = upgrades.Length;
         int random1 = UnityEngine.Random.Range(0,upgradesIndex);
         int random2;
         int random3;
@@ -54,64 +62,93 @@ public class LevelUpScript : MonoBehaviour
         random3 = UnityEngine.Random.Range(0,upgradesIndex);
         }while(random3 == random1 || random3 == random2);
 
-        option1 = upgrades[random1];
-        option2 = upgrades[random2];
-        option3 = upgrades[random3];
+        option[0] = upgrades[random1];
+        option[1] = upgrades[random2];
+        option[2] = upgrades[random3];
 
         ApplyLabels();
     }
 
     private void ApplyLabels(){
-        option1Name.text = option1.upgradeName;
-        option1Desc.text = option1.description;
-
-        option2Name.text = option2.upgradeName;
-        option2Desc.text = option2.description;
-
-        option3Name.text = option3.upgradeName;
-        option3Desc.text = option3.description;
-
+        Color[] optioncolors = new Color[3];
+        for (int i = 0; i < option.Length; i++){
+            switch(option[i].upgradeType){
+                case 1:{
+                    optioncolors[i] = color_weapon;
+                    continue;
+                }
+                case 2:{
+                    optioncolors[i] = color_player;
+                    continue;
+                }
+                case 3:{
+                    optioncolors[i] = color_enemy;
+                    continue;
+                }
+                default:{
+                    continue;
+                }
+            }
+        }
+        for (int i=0; i<3; i++){
+            optionName[i].text = option[i].upgradeName;
+            optionDesc[i].text = option[i].description;
+            optionFrame[i].color = optioncolors[i];
+            optionType[i].color = optioncolors[i];
+            switch(option[i].upgradeType){
+                case 1:
+                optionType[i].text = "SWAP WEAPON";
+                continue;
+                case 2:
+                optionType[i].text = "ROOSTER CYBERNETIC";
+                continue;
+                case 3:
+                optionType[i].text = "GENETIC MUTATION";
+                continue;
+            }
+        }
+        GameManager.instance.MenuMode();
         upgradesHolder.SetActive(true);
     }
 
     public void UpgradeOption1(){
-        if(option1 != null){
-            option1.Apply();
-            ApplyUpgrade(option1);
+        if(option[0] != null){
+            option[0].Apply();
+            ApplyUpgrade(option[0]);
         }
         else{Debug.Log("upgrade returned null what the fuck");}
 
     }
     public void UpgradeOption2(){
-        if(option2 != null){
-            option2.Apply();
-            ApplyUpgrade(option2);
+        if(option[1] != null){
+            option[1].Apply();
+            ApplyUpgrade(option[1]);
         }
         else{Debug.Log("upgrade returned null what the fuck");}
 
     }
     public void UpgradeOption3(){
-        if(option3 != null){
-            option3.Apply();
-            ApplyUpgrade(option3);
+        if(option[2] != null){
+            option[2].Apply();
+            ApplyUpgrade(option[2]);
         }
         else{Debug.Log("upgrade returned null what the fuck");}
     }
 
     private void ApplyUpgrade(Upgrade upgrade){
     upgradesHolder.SetActive(false);
-    OnUpdateStats?.Invoke();
     upgradeName.text = upgrade.upgradeName;
     upgradeDesc.text = upgrade.description;
     upgradeDesc2.text = upgrade.secondDescription;
     selectedUpgradeHolder.SetActive(true);
+    OnUpdateStats?.Invoke();
     }
     // holy shit if it works at first attempt imma touch myself tonight
     // for the record it did not work at first attempt - A3
     public void UpgradeComplete(){
-        GameManager.isPaused = false;
-        Time.timeScale = 1f;
+
         Debug.Log("UPGRADE COMPLETE");
+        GameManager.instance.GameplayMode();
         selectedUpgradeHolder.SetActive(false);
         gameObject.SetActive(false);
     }

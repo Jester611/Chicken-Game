@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 67258637}
-  m_Mesh: {fileID: 2469374854346041958, guid: 369c3d14a9a6c344e972b70c09eaed46, type: 3}
+  m_Mesh: {fileID: 2469374854346041958, guid: 328a4eea1c7ae62458bd9c4ab65c0ec7, type: 3}
 --- !u!23 &67258639
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 67258637}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 369c3d14a9a6c344e972b70c09eaed46, type: 3}
+  - {fileID: 2100000, guid: cc06dff5cd316cd43aa0e5045cd7d6e6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5064,7 +5064,7 @@ Transform:
   m_GameObject: {fileID: 5255436397804182629}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 67258638}
@@ -5115,7 +5115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3e31984c05883440afeec5bfeb8496f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLevel: 0
+  xpValue: 2
+  statmultiplier: 1.3
 --- !u!82 &1621651789570362741
 AudioSource:
   m_ObjectHideFlags: 0

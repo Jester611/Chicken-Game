@@ -18,6 +18,7 @@ public class BulletScript : MonoBehaviour
         GameObject hit = other.gameObject;
         IDamagable damagable = hit.GetComponent<IDamagable>();
 
+
         // ## ON HIT DAMAGE + KNOCKBACK ##
         if (damagable != null) {
 
@@ -25,8 +26,7 @@ public class BulletScript : MonoBehaviour
             damagable.TakeDamage(damage);
 
             // Knockback
-            Vector3 direction = gameObject.GetComponent<Rigidbody>().velocity.normalized;
-            damagable.gameObject.GetComponent<Rigidbody>().AddForce(direction * knockback, ForceMode.Impulse);
+            damagable.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
         }
 
         // ## EXPLOSIVE KNOCKBACK + DAMAGE ##
@@ -36,6 +36,7 @@ public class BulletScript : MonoBehaviour
             Collider[] affectedObjects = Physics.OverlapSphere(transform.position, explosionRadius);
 
             foreach (Collider collider in affectedObjects) {
+
                 damagable = collider.gameObject.GetComponent<IDamagable>();
 
                 if (damagable != null && hit != collider.gameObject) {
@@ -57,7 +58,11 @@ public class BulletScript : MonoBehaviour
             }
             GameObject explosionFX = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             explosionFX.transform.localScale = new Vector3(explosionRadius, explosionRadius, explosionRadius);
-            Destroy(explosionFX, 1f);
+            Destroy(explosionFX, 0.5f);
+        }
+        else{
+            GameObject explosionFX = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(explosionFX, 0.5f);
         }
         Destroy(gameObject);
     }

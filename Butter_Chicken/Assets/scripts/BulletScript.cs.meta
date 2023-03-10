@@ -5,6 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - explosionPrefab: {fileID: 6579084017644873751, guid: 90ede07cb7be9f04fb937cb27b1b4067, type: 3}
+  - bulletPopPrefab: {fileID: 6579084017644873751, guid: f0e20749dd8c3d94b8fe026400e1c037, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

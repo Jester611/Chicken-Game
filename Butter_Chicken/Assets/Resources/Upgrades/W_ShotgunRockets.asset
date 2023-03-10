@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9ec4ffa211e774b929fdb1cd34dff0, type: 3}
+  m_Name: W_ShotgunRockets
+  m_EditorClassIdentifier: 
+  upgradeName: Shotgun rockets
+  description: SHOTGUN ROCKETS!
+  secondDescription: It's not that impressive.
+  upgradeType: 1
+  bulletDamage: 15
+  bulletExplosiveRadius: 2.6
+  bulletKnockback: 0
+  gunRateOfFire: 2
+  gunBulletSpeed: 10
+  gunRecoil: 15
+  gunSpread: 60
+  gunBurstSize: 3
+  playerSpeed: 1
+  playerMaxHP: 50
+  playerInvincibilityTimer: 0.4
+  playerWeight: 1
+  playerDrag: 8
+  enemyHP: 10
+  enemySpeed: 0.05
+  enemySize: 1
+  enemyAttack: 8
+  enemyWeight: 0.2

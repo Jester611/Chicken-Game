@@ -19,14 +19,12 @@ public class EnemyScript : MonoBehaviour, IDamagable
     // ## END UPGRADEABLE VARS ##
     public float currentHealth {get; set;} 
 
-    public int enemyLevel;
-
+    [SerializeField] private int xpValue;
+    [SerializeField] private float statmultiplier;
     private float distance;
     Vector3 direction;
-
-    public static event Action OnGainXP;
-    public event Action OnDeath;
-    public event Action OnDamaged;
+    public static event Action<int> OnGainXP;
+    private bool isAlreadyDead = false; //prevents getting multiple exp for multiple bullets killing same enemy on a single frame
 
     private void Awake() {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -36,17 +34,8 @@ public class EnemyScript : MonoBehaviour, IDamagable
         player = PlayerController.instance;
         UpdateStats();
         currentHealth = maxHealth;
-
     }
 
-    public void TakeDamage(float damage){
-        Debug.Log($"current hp {currentHealth}, max {maxHealth} gonna take {damage} damage");
-        currentHealth -= damage;
-        OnDamaged?.Invoke();
-        if(currentHealth <= 0) {
-            Die();
-        }
-    }
     private void OnEnable() {
         LevelUpScript.OnUpdateStats += UpdateStats;
     }
@@ -55,7 +44,7 @@ public class EnemyScript : MonoBehaviour, IDamagable
     }
 
     private void FixedUpdate() {
-        if (transform.position.y < -20){
+        if (transform.position.y < -2 || transform.position.y > 8){
             Die();
         }
 
@@ -68,26 +57,31 @@ public class EnemyScript : MonoBehaviour, IDamagable
         float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
     }
+    public void TakeDamage(float damage){
+        currentHealth -= damage;
+        if(currentHealth <= 0 && !isAlreadyDead) {
+            isAlreadyDead = true;
+            Die();
+        }
+    }
 
-    private void Die() {
-        OnGainXP?.Invoke();
-        OnDeath?.Invoke();
+    public void Die() {
+        OnGainXP?.Invoke(xpValue);
         Destroy(gameObject);
     }
 
     private void UpdateStats() {
         movementSpeed = GameManager.instance.enemySpeed;
-        maxHealth = GameManager.instance.enemyHP;
-        attackDamage = GameManager.instance.enemyAttack;
-        size = GameManager.instance.enemySize;
+        maxHealth = GameManager.instance.enemyHP * statmultiplier;
+        attackDamage = GameManager.instance.enemyAttack * statmultiplier;
+        size = GameManager.instance.enemySize * statmultiplier;
         transform.localScale = new Vector3(size,size,size);
-        rb.mass = GameManager.instance.enemyWeight;
+        rb.mass = GameManager.instance.enemyWeight * statmultiplier;
     }
 
-    // Aerial: on collision damage is boring as fuck but I'm too shit of a programmer to write anything better
     private void OnCollisionStay(Collision other) {
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
-        if(player != null){
+        if(player != null && gameObject != null){ // lmao
             player.TakeDamage(attackDamage);
         }
     }

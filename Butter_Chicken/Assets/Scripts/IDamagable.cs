@@ -9,7 +9,5 @@ public interface IDamagable
     Rigidbody rb {get;}
     public float maxHealth {get; set;}
     public float currentHealth {get; set;}
-    public event System.Action OnDamaged;
-    public event System.Action OnDeath;
     void TakeDamage(float damage);
 }

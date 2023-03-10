@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class WeaponScript : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform gunPoint;
 
+    private Vector3 aimPoint;
     bool readyToFire;
         
     // ## UPGRADEABLE VARS ##
@@ -17,6 +17,7 @@ public class WeaponScript : MonoBehaviour
     private float reloadTime;
     private float recoil;
     private float spread;
+    private int burstSize;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -37,25 +38,32 @@ public class WeaponScript : MonoBehaviour
         LevelUpScript.OnUpdateStats -= UpdateStats;
     }
 
-    public void Fire() {
+    public void Fire() {    //yeah this could be more efficient using object pooling idc
         if(readyToFire){
-            // BULLET SPREAD
-            Quaternion spreadRotation = gunPoint.rotation;
-            if(spread > 0){
-                spreadRotation = gunPoint.rotation*Quaternion.Euler(0,Random.Range(-spread/2, spread/2), 0);
-            }
-            GameObject bullet = Instantiate(bulletPrefab, gunPoint.position, spreadRotation);
 
             // in case we'd want to add player velocity to projectile speed
             // Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
             // then
             //bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed + playerVelocity, ForceMode.VelocityChange);
             // this didn't look very good in gameplay though
+            // a good looking middle ground could be achieved using lerp
+            aimPoint = new Vector3(player.lookPoint.x, gunPoint.position.y, player.lookPoint.z);
+            gunPoint.LookAt(aimPoint);
+            // burst fire
+            for(int i = 0; i < burstSize; i++){
+                Quaternion spreadRotation = gunPoint.rotation;
+                if(spread > 0){
+                    spreadRotation = gunPoint.rotation*Quaternion.Euler(0,Random.Range(-spread/2, spread/2), 0);
+                }
 
-            // SPAWN BULLET
-            bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed, ForceMode.VelocityChange);
+                // SPAWN BULLET
+                GameObject bullet = Instantiate(bulletPrefab, gunPoint.position, spreadRotation);
+
+                bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bulletSpeed, ForceMode.VelocityChange);
+
+                 Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
+            }
             readyToFire = false;
-            Physics.IgnoreCollision(bullet.GetComponent<Collider>(), GetComponent<Collider>());
             // GUN RECOIL
             rb.AddForce(-gunPoint.forward*recoil, ForceMode.Impulse);
             // RELOAD TIMER
@@ -74,6 +82,7 @@ public class WeaponScript : MonoBehaviour
             reloadTime = GameManager.instance.gunRateOfFire;
             recoil = GameManager.instance.gunRecoil;
             spread = GameManager.instance.gunSpread;
+            burstSize = GameManager.instance.gunBurstSize;
         }
         else{Debug.Log("weapon not detecting singleton ffs");}
     }
